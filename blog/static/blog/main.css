@@ -1,0 +1,234 @@
+body {
+    background-color: #2A3452;
+    color: #333333;
+    margin-top: 4rem;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+  }
+  
+
+  
+  ul {
+    margin: 0;
+  }
+  
+  .bg-steel {
+    background-color: #5f788a;
+  }
+  
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  
+  .content-section {
+  
+    background: #ffffff;
+    width: 40% !important;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 10px#171F38;
+  }
+
+  .content-section-questions {
+    text-align: center !important;
+    font-size: 12px !important;
+    
+    border: 1px solid #dddddd;
+    border-radius: 1px;
+    margin-right: 4px;
+
+    box-shadow: 10px 10px 10px#171F38;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 600px;
+  }
+  .table{
+    margin: 0px auto !important;
+  }
+  
+  .article-title {
+    color: #444444;
+  }
+  
+  a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+  }
+  
+  .article-content {
+    white-space: pre-line;
+  }
+  
+  .article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+  }
+  .content-section{
+    margin-top: 20px;
+    background-color: #2A3452;
+    color: #FF4481;
+  }
+  .content-section button{
+    color: #FFF;
+    border-color: #0000;
+    background-color: #FF4481;
+  }
+  .content-section a{
+    color: #FF4481;
+  }
+  .content-section button:hover{
+    
+    background-color: #FF4481;
+  }
+  
+  .article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+  }
+  
+  .article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .article-svg {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+  }
+  
+  .account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .account-heading {
+    font-size: 2.5rem;
+  }
+  
+  .mod-title{
+    color: #FF4481 !important;
+  }
+  nav{
+    background-color: #171F38 !important;
+    padding: 0 !important;
+  }
+  .custom-toggler.navbar-toggler {
+    border-color: #FF4481;
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,68,129, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+#menu a{
+  text-decoration: none;
+}
+
+.side-nav ul{
+  padding: 0;
+}
+
+.side-nav ul li {
+  padding: 10px 10px;
+  list-style-type: none;
+    
+}
+
+.questions{
+
+}
+
+.side-nav{
+  position: fixed;
+  float: left;
+  width: 240px;
+  min-height: 100vh;
+  background-color: #171F38;
+  text-decoration: none;
+  margin-right: 0;
+    
+  }
+  .side-nav ul li a {
+    color: #FFFF;
+    text-decoration: none !important;
+    margin-top: 15px;
+    font-size: 24px;
+    
+  }
+
+  .side-nav ul li:hover{
+    background-color: #FF4481;
+    visibility: visible;
+  }
+ 
+  .side-nav ul li a i {
+    color: #FFF;
+    text-align: center;
+  }
+  #logo{
+    padding-right: 17px;
+    padding-left: 5px;
+  }
+
+
+  @media only screen and (max-width: 600px){
+    .side-nav{
+      visibility: hidden;
+    }
+    .main-content{
+      padding-left: 0 !important;
+    }
+    .content-section-questions{
+      margin: 0 auto !important;
+      margin-top: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 950px){
+    .content-section-questions{
+      margin: 0 auto !important;
+      margin-top: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 760px){
+    .side-nav{
+      visibility: hidden;
+    }
+    .main-content{
+      padding-left: 0 !important;
+    }
+    .content-section-questions{
+      margin-top: 5px;
+      margin: 0 auto !important;
+    }
+  }
+
+.main-content{
+  padding-left: 246px;
+}
+
+.dropdown-item{
+  color: #FFFFFF !important;
+}
+.dropdown-item:hover{
+  background-color: #FF4481 !important;
+}
+
+.side-nav ul li .dropdown-menu{
+  background-color: #2A3452 !important;
+}

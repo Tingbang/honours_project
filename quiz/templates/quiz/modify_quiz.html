@@ -1,0 +1,90 @@
+<!--Modify Quiz/Questions to change-->
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{%block title%} 
+<div class="row justify-content-center">
+    <div class="col-4">
+        <h1 class="text-center mod-title">{{title}}</h1>
+        <legend class="text-center">{{quiz.subject}}</legend>
+        {% if quiz %}
+            {% for quiz in quiz%}
+            <h2 class="mod-title text-center">Subject: {{quiz.subject}}</h2>
+            {% endfor%}
+        {% else%}
+            <p>No Quiz found</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% if user.is_authenticated %}
+    <div class="content-section col-lg-7 col-md-8 col-sm-8 col-xs-8 mx-auto mt-0">
+        <form name="add_question" class="add_question" method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input id="submit" class="btn btn-dark" value="submit" name="submit" type="submit"></input>
+        </form>
+    </div>
+
+    <div class="content-section-questions col-lg-4 col-md-8 col-sm-8 col-xs-8 mt-0 text-center">
+            <h2 class="text-center">Question List: </h2>
+            {% if question%}
+                {% for question in question%}
+                    <h2 class="mod-title text-center">Q: {{question.question}}</h2>
+                {% endfor%}
+                    
+                {% else%}
+            {% endif%}
+            <div class="qs"><h2 class="mod-title fill"></h2></div>
+        </div>
+        
+    {% endif%}
+</div> <!--Row-->
+
+
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+      var form = $(".add_question");
+
+      form.submit(function(event){
+
+        event.preventDefault();
+        var thisForm = $(this);
+        var url = thisForm.attr("action");
+        var method = thisForm.attr("method");
+        var formData = thisForm.serialize();
+
+        //sneak
+        var quest = $('[name = "question"]').val();
+        
+        $.ajax({
+          url: url,
+          method: method,
+          data: formData,
+          success: function(data){
+            $('.add_question')[0].reset();
+            $('.qs').append("<h2 class= 'mod-title'>Q: " + quest + "</h2>");
+            //alert("ping " + quest);
+            
+            
+
+          },//End of Success
+          error: function(errorData){
+            console.log("error");
+            //console.log(errorData);
+          }
+        })
+        
+      });
+
+    });
+
+</script>
+{% endblock javascript %}
+
+{% endblock content %}
+
