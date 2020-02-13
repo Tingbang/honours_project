@@ -32,6 +32,7 @@ class Questions(models.Model):
     incorrect_answer_2 = models.CharField(max_length = 400, default ='')
     incorrect_answer_3 = models.CharField(max_length = 400, default ='')
     incorrect_answer_4 = models.CharField(max_length = 400, default ='')
+    weighting = models.IntegerField(default = 1)
 
     def __str__(self):
         return self.question
@@ -43,15 +44,32 @@ class Questions(models.Model):
         verbose_name_plural = "questions"
 
 #incorrect answers
+#take quiz, present results on front end using jquery, then store in back end to be later viewed in statistics
 class Choice(models.Model):
-    #foreign key to questions, this should include the users choice/correct/incorrect answers
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     correct_answer = models.CharField(max_length = 300)
-    incorrect_answers = models.CharField(max_length = 1000)
-    correct = models.CharField(max_length = 3)
+    user_answer = models.CharField(max_length = 1000)
+    #correct = models.BoolField(default = false)
     
     class Meta:
         verbose_name_plural = "choices"
+
+
+
+class Results(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    score = models.FloatField(default = 0)
+    
+
+
+
+
+
+
+    class meta:
+        verbose_name_plural="results"
 
 
 #Results Table

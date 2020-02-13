@@ -94,4 +94,9 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
 
 @login_required
 def quiz_home(request):
-    return render(request, 'quiz/quizzes.html')
+    all_Q = Quiz.objects.all()
+
+    args = {'quiz': all_Q}
+
+
+    return render(request, 'quiz/take_quiz_menu.html', args)

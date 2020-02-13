@@ -54,6 +54,15 @@ body {
   }
   .table{
     margin: 0px auto !important;
+    background-color: #171F38!important;
+  }
+  
+  .tablewrap{
+    position: relative;
+    height: 73vh;
+    width: 100%;
+    overflow-y: scroll;
+    
   }
   
   .article-title {
@@ -148,7 +157,12 @@ body {
     
 }
 
-.questions{
+.quest-list{
+
+  overflow-y: scroll;
+  height: 400px !important;
+  width: 100% !important;
+
 
 }
 

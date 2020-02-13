@@ -1,0 +1,48 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+
+<div class="row justify-content-center">
+    <div class="col-8">
+        <legend class="text-center"> Quizzes</legend>
+        <legend class="text-center text-muted"> A description on how to search for quizzes</legend>
+        <div class="form-group">
+            <input placeholder="Filter Quizzes" type ="text" class="input-large col-xs-8 form-control mt-3 mb-3">
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="tablewrap">
+    <div class="col-12 mt-2 text-center">
+        <table class="table table-dark table-striped mx-auto">
+            <thead>
+                <tr>
+                <th class="mod-title" scope="col">Title</th>
+                <th class="mod-title" scope="col">Subject</th>
+                <th class="mod-title" scope="col">Level</th>
+                <th class="mod-title" scope="col">Author</th>
+                <th class="mod-title" scope="col">Topic</th>
+                <th class="mod-title" scope="col">Modify</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quiz%}
+                <tr>
+                <td>{{quiz.title}}</td>
+                <td>{{quiz.subject}}</td>
+                <td>{{quiz.level}}</td>
+                <td>{{quiz.author}}</td>
+                <td>{{quiz.topic}}</td>
+                <td><input type="button" class="btn btn-dark" value="Take Quiz"></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+            </table>
+
+    </div><!--End of Column-->
+  </div>
+</div><!--End of Row-->
+
+{% endblock content %}
