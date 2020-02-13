@@ -39,6 +39,7 @@ class Questions(models.Model):
 
     def get_absolute_url(self):
         return self.quiz.get_absolute_url()
+        
 
     class Meta:
         verbose_name_plural = "questions"
@@ -62,11 +63,6 @@ class Results(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     score = models.FloatField(default = 0)
     
-
-
-
-
-
 
     class meta:
         verbose_name_plural="results"

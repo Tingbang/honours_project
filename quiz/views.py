@@ -39,16 +39,13 @@ def create_questions(request):
             instance = form.save(commit=False)
             instance.quiz = newquiz
             instance.save()
-            create_questions()
+            
             return HttpResponseRedirect('/my_quiz')
 
     else:
         #Re-Render
         form = CreateQuestionForm()
     return render(request, 'quiz/create_questions.html', {'form': form})
-
-
-
 
 #Make sure to pass the user to ensure that only the author of the quiz can view******
 #When a user clicks "edit", take them to a page that retrieves that specific quizzes details
@@ -100,3 +97,14 @@ def quiz_home(request):
 
 
     return render(request, 'quiz/take_quiz_menu.html', args)
+
+
+@login_required
+def active_quiz(request, quiz_pk):
+
+    questions = Questions.objects.filter(quiz=quiz_pk)
+    
+
+    args={'question': questions}
+    return render(request, 'quiz/quiz_active.html', args)
+    

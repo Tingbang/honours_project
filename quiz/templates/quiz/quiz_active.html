@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        {%for question in question%}
+            <h2>{{question.question}}</h2>
+
+        {%endfor%}
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -34,7 +34,7 @@
                 <td>{{quiz.level}}</td>
                 <td>{{quiz.author}}</td>
                 <td>{{quiz.topic}}</td>
-                <td><input type="button" class="btn btn-dark" value="Take Quiz"></td>
+                <td><a href="{%url 'active-quiz' quiz_pk=quiz.pk%}">Take</a></td>
                 </tr>
                 {% endfor %}
 
