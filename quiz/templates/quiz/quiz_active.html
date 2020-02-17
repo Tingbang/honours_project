@@ -2,14 +2,55 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+
 <div class="row justify-content-center">
+    <div class="col-12">
+        <div class="content-section mx-auto animated fadeInLeftBig slow">                
+            {% for quiz in quiz%}
+                <h2 class="">{{quiz.title}}</h2>
+                <legend class="text-muted">Ready to start?</legend>
+                <button class="btn btn-secondary animated infinite tada slower mr-3">Start</button>
+                <button class="btn btn-danger">Quit</button>
+            {% endfor%}
+        </div>
+    </div>
+</div>
+ 
+<!---->
+
+
+
+<!-- <div class="row justify-content-center">
     <div class="col-12">
         {%for question in question%}
             <h2>{{question.question}}</h2>
+            <div class="content-section">
+                <div class="input-group">
+                    <select name="question" id="{{question.pk}}" class="custom-select">
+                        <input type ="radio" value="{{question.incorrect_answer_1}}">{{question.incorrect_answer_1}}</input>
+                        <input type ="radio" value="{{question.incorrect_answer_2}}">{{question.incorrect_answer_2}}</input>
+                        <input type ="radio" value="{{question.incorrect_answer_3}}">{{question.incorrect_answer_3}}</input>
+                        <input type ="radio" value="{{question.incorrect_answer_4}}">{{question.incorrect_answer_4}}</input>
+                        <input type ="radio" value="{{question.correct_answer}}">{{question.correct_answer}}</input>
+                    </select>
+
+                </div>
+            </div>
 
         {%endfor%}
     </div>
-</div>
+</div> -->
+
+<script>
 
 
+// window.onbeforeunload = function(){
+//     return "Quiz in progress...are you sure you want to leave?";
+// };
+
+// if ("onhashchange" in window){
+//     //alert("supported");
+// }
+
+</script>
 {% endblock content %}

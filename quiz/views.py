@@ -101,10 +101,11 @@ def quiz_home(request):
 
 @login_required
 def active_quiz(request, quiz_pk):
+    quiz = Quiz.objects.filter(pk=quiz_pk)
 
     questions = Questions.objects.filter(quiz=quiz_pk)
     
 
-    args={'question': questions}
+    args={'question': questions, 'quiz': quiz}
     return render(request, 'quiz/quiz_active.html', args)
     
