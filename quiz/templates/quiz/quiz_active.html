@@ -20,9 +20,10 @@ var answers = [];
         </div>
         <!--RANDOM NUM BETWEEN 1 and 4 TO PLACE IT-->
 
+        
         <div class="active-quiz d-none">
-            <div class="col-12 rare">
-                    <h2 class="quest text-center"></h2>
+                <h2 class="quest text-center"></h2>
+            <div class="choice">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -31,42 +32,53 @@ var answers = [];
                         </div>
                         <input type="text" class="ans0 form-control" aria-label="Text input with radio button">
                     </div>
+            </div>
+                <div class="choice">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                               <input name="choice1" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans1 form-control dark" aria-label="Text input with radio button">
+                        <input type="text" class="ans1 form-control" aria-label="Text input with radio button">
                     </div>
+                </div>
+                <div class="choice">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                               <input name="choice2" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans2 form-control dark" aria-label="Text input with radio button">
+                        <input type="text" class="ans2 form-control" aria-label="Text input with radio button">
                     </div>
-                    <div class="input-group">
+                </div>
+                <div class="choice">
+                        <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                               <input name="choice3" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans3 form-control dark" aria-label="Text input with radio button">
+                        <input type="text" class="ans3 form-control" aria-label="Text input with radio button">
                     </div>
-                    <div class="input-group">
+                </div>
+                <div class="choice">
+                        <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice4" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice0" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans4 form-control dark" aria-label="Text input with radio button">
+                        <input type="text" class="ans4 form-control" aria-label="Text input with radio button">
                     </div>
-                    <button id="next" class="btn btn-secondary">Next</button>
-
-            </div>
-        </div>
+                    
+                </div>
+                <button id="next" class="btn btn-secondary">Next</button>
+                
+        
+        
+    </div>
     </div>
 </div>
 
@@ -82,10 +94,25 @@ var answers = [];
     var x = 0;
 
 
-$('button').click(function() {
-  $(".band").randomize("input", ".member1");
-});
-    
+(function($) {
+
+$.fn.randomize = function(childElem) {
+  return this.each(function() {
+      var $this = $(this);
+      var elems = $this.children(childElem);
+
+      elems.sort(function() { return (Math.round(Math.random())-0.5); });  
+
+      $this.remove(childElem);  
+
+      for(var i=0; i < elems.length; i++)
+        $this.append(elems[i]);      
+
+  });    
+}
+})(jQuery)
+
+
 $(document).ready(function(){
     const url = window.location.href
     $.ajax({
@@ -93,9 +120,6 @@ $(document).ready(function(){
         method: "GET",
         dataType: "json",
         success: function(data){
-            //results = data;
-            console.log(data);
-            console.log(data[0].fields.question);
             
             for(var i =0; i < data.length; i++){
 
@@ -129,13 +153,25 @@ $(document).ready(function(){
 
             $(document).on("click","#next", function(){
                 x++;
-                gerrt(x);
+                if (x >= incorrect.length){
+                    //alert("triggered");
+                    $('.quest').empty();
+                    $('.quest').html("quiz finished");
+                    $('#next').addClass("disabled").prop('diabled',true);
+                    }
+                else{
+                    
+                        gerrt(x);
+
+                    }
+                
 
             });
 
         });
 function gerrt(x){
 
+    $("div.active-quiz").randomize("div.choice");
     $('.ans0').val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
     $('.ans1').val(incorrect[x].incorrect_2).html(incorrect[x].incorrect_2);
     $('.ans2').val(incorrect[x].incorrect_3).html(incorrect[x].incorrect_3);
@@ -147,18 +183,7 @@ function gerrt(x){
     $('.quest').empty();
     $('.quest').html(results[x]);
     $('.lbl').html(answers[x]);
-    console.log(incorrect[x]);
     
-
-    //$('.ans'+ x).val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
-
-    if (x == results.length){
-        $('.quest').empty();
-        $('.quest').html("quiz finished");
-        $('#next').addClass("disabled").prop('diabled',true);
-
-
-    }
 
 
 }
