@@ -39,6 +39,7 @@
                 {% else%}
             {% endif%}
             <div class="qs"><h2 class="mod-title fill"></h2></div>
+            <p>TEST: {{response_data}}</p>
         </div>
         
     {% endif%}
@@ -55,20 +56,19 @@
         event.preventDefault();
         var thisForm = $(this);
         var url = thisForm.attr("action");
+       // console.log(url);
         var method = thisForm.attr("method");
         var formData = thisForm.serialize();
-
-        //sneak
-        var quest = $('[name = "question"]').val();
         
         $.ajax({
           url: url,
           method: method,
+          dataType: "json",
           data: formData,
           success: function(data){
             $('.add_question')[0].reset();
-            $('.qs').append("<h2 class= 'mod-title'>Q: " + quest + "</h2>");
-            //alert("ping " + quest);
+            $('.qs').append("<h2 class= 'mod-title'>Q: " + data.question + "</h2>");
+            console.log(url);
             
             
 

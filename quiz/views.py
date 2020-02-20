@@ -6,6 +6,9 @@ from quiz.forms import CreateQuestionForm
 from quiz.models import Quiz, Questions
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.html import strip_tags
+from django.core import serializers
+import json
+from django.http import JsonResponse
 
 @login_required
 def create_quiz(request):
@@ -58,9 +61,7 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
     user_check = str(request.user)
 
     if request.is_ajax():
-        print("is ajax")
         if form.is_valid():
-            print("working")
             quiz = Quiz.objects.filter(pk=pk).first()
             question = form.cleaned_data.get('question')
             correct_answer = form.cleaned_data.get('correct_answer')
@@ -77,7 +78,7 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
             instance.quiz = quiz
             instance.save()
            
-            return HttpResponse('')            
+            return HttpResponse(json.dumps(response_data), content_type="application/json")            
 
     if pk and (user_check == auth):
         my_quiz = Quiz.objects.filter(pk=pk, author=user)
@@ -102,10 +103,13 @@ def quiz_home(request):
 @login_required
 def active_quiz(request, quiz_pk):
     quiz = Quiz.objects.filter(pk=quiz_pk)
-
     questions = Questions.objects.filter(quiz=quiz_pk)
-    
+    serial = serializers.serialize("json", Questions.objects.filter(quiz=quiz_pk))
 
-    args={'question': questions, 'quiz': quiz}
+    if request.is_ajax():
+        response_data = serial
+        return HttpResponse(response_data, content_type="application/json")
+
+    args={'question': questions, 'quiz': quiz, 'serial': serial}
     return render(request, 'quiz/quiz_active.html', args)
     

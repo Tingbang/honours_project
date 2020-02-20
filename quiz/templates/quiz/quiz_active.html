@@ -3,54 +3,178 @@
 {% block content %}
 
 
+<script>
+
+var answers = [];
+</script>
+<!--Quiz Opening-->
 <div class="row justify-content-center">
     <div class="col-12">
-        <div class="content-section mx-auto animated fadeInLeftBig slow">                
+        <div id="start-menu" class="content-section mx-auto animated fadeInLeftBig slow">    
             {% for quiz in quiz%}
                 <h2 class="">{{quiz.title}}</h2>
                 <legend class="text-muted">Ready to start?</legend>
-                <button class="btn btn-secondary animated infinite tada slower mr-3">Start</button>
-                <button class="btn btn-danger">Quit</button>
+                <button id="start" name="start" class="btn btn-secondary animated infinite tada slower mr-3">Start</button>
+                <button  class="btn btn-danger">Quit</button>
             {% endfor%}
+        </div>
+        <!--RANDOM NUM BETWEEN 1 and 4 TO PLACE IT-->
+
+        <div class="active-quiz d-none">
+            <div class="col-12 rare">
+                    <h2 class="quest text-center"></h2>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input name="choice0" type="radio" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="ans0 form-control" aria-label="Text input with radio button">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input name="choice1" type="radio" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="ans1 form-control dark" aria-label="Text input with radio button">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input name="choice2" type="radio" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="ans2 form-control dark" aria-label="Text input with radio button">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input name="choice3" type="radio" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="ans3 form-control dark" aria-label="Text input with radio button">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <input name="choice4" type="radio" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="ans4 form-control dark" aria-label="Text input with radio button">
+                    </div>
+                    <button id="next" class="btn btn-secondary">Next</button>
+
+            </div>
         </div>
     </div>
 </div>
- 
-<!---->
 
-
-
-<!-- <div class="row justify-content-center">
-    <div class="col-12">
-        {%for question in question%}
-            <h2>{{question.question}}</h2>
-            <div class="content-section">
-                <div class="input-group">
-                    <select name="question" id="{{question.pk}}" class="custom-select">
-                        <input type ="radio" value="{{question.incorrect_answer_1}}">{{question.incorrect_answer_1}}</input>
-                        <input type ="radio" value="{{question.incorrect_answer_2}}">{{question.incorrect_answer_2}}</input>
-                        <input type ="radio" value="{{question.incorrect_answer_3}}">{{question.incorrect_answer_3}}</input>
-                        <input type ="radio" value="{{question.incorrect_answer_4}}">{{question.incorrect_answer_4}}</input>
-                        <input type ="radio" value="{{question.correct_answer}}">{{question.correct_answer}}</input>
-                    </select>
-
-                </div>
-            </div>
-
-        {%endfor%}
-    </div>
-</div> -->
-
-<script>
-
-
-// window.onbeforeunload = function(){
-//     return "Quiz in progress...are you sure you want to leave?";
-// };
-
-// if ("onhashchange" in window){
-//     //alert("supported");
-// }
-
-</script>
 {% endblock content %}
+
+
+
+{% block javascript %}
+<script>
+    var results =[];
+    var answers = [];
+    var incorrect =[];
+    var x = 0;
+
+
+$('button').click(function() {
+  $(".band").randomize("input", ".member1");
+});
+    
+$(document).ready(function(){
+    const url = window.location.href
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "json",
+        success: function(data){
+            //results = data;
+            console.log(data);
+            console.log(data[0].fields.question);
+            
+            for(var i =0; i < data.length; i++){
+
+                results.push(data[i].fields.question);
+                answers.push(data[i].fields.correct_answer);
+                incorrect.push({
+                                quest: data[i].fields.question,
+                                incorrect_1: data[i].fields.incorrect_answer_1,
+                                incorrect_2: data[i].fields.incorrect_answer_2,
+                                incorrect_3: data[i].fields.incorrect_answer_3,
+                                incorrect_4: data[i].fields.incorrect_answer_4,
+                                correct: data[i].fields.correct_answer,
+                                });
+            }
+            gerrt(x);
+            console.log(incorrect);
+            
+
+            },
+            error: function(errorData){
+                console.log("error");
+
+            }
+        })
+
+        $(document).on("click", '#start', function(){
+            $('#start-menu').addClass("animated fadeOutLeft slow");
+            $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto");
+
+            });
+
+            $(document).on("click","#next", function(){
+                x++;
+                gerrt(x);
+
+            });
+
+        });
+function gerrt(x){
+
+    $('.ans0').val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
+    $('.ans1').val(incorrect[x].incorrect_2).html(incorrect[x].incorrect_2);
+    $('.ans2').val(incorrect[x].incorrect_3).html(incorrect[x].incorrect_3);
+    $('.ans3').val(incorrect[x].incorrect_4).html(incorrect[x].incorrect_4);
+    $('.ans4').val(incorrect[x].correct).html(incorrect[x].correct);
+
+    var ele = $('.member1'); 
+
+    $('.quest').empty();
+    $('.quest').html(results[x]);
+    $('.lbl').html(answers[x]);
+    console.log(incorrect[x]);
+    
+
+    //$('.ans'+ x).val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
+
+    if (x == results.length){
+        $('.quest').empty();
+        $('.quest').html("quiz finished");
+        $('#next').addClass("disabled").prop('diabled',true);
+
+
+    }
+
+
+}
+
+    
+    // window.onbeforeunload = function(){
+    //     return "Quiz in progress...are you sure you want to leave?";
+    // };
+    
+    // if ("onhashchange" in window){
+    //     //alert("supported");
+    // }
+    
+    </script>
+
+
+
+{% endblock %}
+
