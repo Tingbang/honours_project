@@ -30,7 +30,7 @@ var answers = [];
                               <input name="choice0" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans0 form-control" aria-label="Text input with radio button">
+                        <label type="text" class="ans0 form-control" aria-label="Text input with radio button"></label>
                     </div>
             </div>
                 <div class="choice">
@@ -40,7 +40,7 @@ var answers = [];
                               <input name="choice1" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans1 form-control" aria-label="Text input with radio button">
+                        <label type="text" class="ans1 form-control disab" aria-label="Text input with radio button"></label>
                     </div>
                 </div>
                 <div class="choice">
@@ -50,7 +50,7 @@ var answers = [];
                               <input name="choice2" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans2 form-control" aria-label="Text input with radio button">
+                        <label type="text" class="ans2 form-control" aria-label="Text input with radio button"></label>
                     </div>
                 </div>
                 <div class="choice">
@@ -60,17 +60,17 @@ var answers = [];
                               <input name="choice3" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans3 form-control" aria-label="Text input with radio button">
+                        <label type="text" class="ans3 form-control" aria-label="Text input with radio button"></label>
                     </div>
                 </div>
                 <div class="choice">
                         <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice0" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice4" type="radio" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" class="ans4 form-control" aria-label="Text input with radio button">
+                        <label type="text" class="ans4 form-control" aria-label="Text input with radio button"></label>
                     </div>
                     
                 </div>
@@ -84,15 +84,12 @@ var answers = [];
 
 {% endblock content %}
 
-
-
 {% block javascript %}
 <script>
     var results =[];
     var answers = [];
     var incorrect =[];
     var x = 0;
-
 
 (function($) {
 
@@ -135,9 +132,8 @@ $(document).ready(function(){
                                 });
             }
             gerrt(x);
-            console.log(incorrect);
+            //console.log(incorrect);
             
-
             },
             error: function(errorData){
                 console.log("error");
@@ -145,11 +141,7 @@ $(document).ready(function(){
             }
         })
 
-        $(document).on("click", '#start', function(){
-            $('#start-menu').addClass("animated fadeOutLeft slow");
-            $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto");
-
-            });
+        $(document).on("click", '#start', function(){ $('#start-menu').addClass("animated fadeOutLeft slow"); $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto"); });
 
             $(document).on("click","#next", function(){
                 x++;
@@ -160,18 +152,19 @@ $(document).ready(function(){
                     $('#next').addClass("disabled").prop('diabled',true);
                     }
                 else{
-                    
                         gerrt(x);
-
                     }
                 
 
             });
 
         });
+
+
 function gerrt(x){
 
     $("div.active-quiz").randomize("div.choice");
+
     $('.ans0').val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
     $('.ans1').val(incorrect[x].incorrect_2).html(incorrect[x].incorrect_2);
     $('.ans2').val(incorrect[x].incorrect_3).html(incorrect[x].incorrect_3);
@@ -184,18 +177,9 @@ function gerrt(x){
     $('.quest').html(results[x]);
     $('.lbl').html(answers[x]);
     
-
-
 }
 
-    
-    // window.onbeforeunload = function(){
-    //     return "Quiz in progress...are you sure you want to leave?";
-    // };
-    
-    // if ("onhashchange" in window){
-    //     //alert("supported");
-    // }
+
     
     </script>
 
