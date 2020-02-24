@@ -27,7 +27,7 @@ var answers = [];
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice0" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice"  type="radio" id='choice0' value=""aria-label="Radio button for following text input">
                             </div>
                         </div>
                         <label type="text" class="ans0 form-control" aria-label="Text input with radio button"></label>
@@ -37,7 +37,7 @@ var answers = [];
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice1" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice"  type="radio" id='choice1' aria-label="Radio button for following text input">
                             </div>
                         </div>
                         <label type="text" class="ans1 form-control disab" aria-label="Text input with radio button"></label>
@@ -47,7 +47,7 @@ var answers = [];
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice2" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice" type="radio"  id='choice2' aria-label="Radio button for following text input">
                             </div>
                         </div>
                         <label type="text" class="ans2 form-control" aria-label="Text input with radio button"></label>
@@ -57,7 +57,7 @@ var answers = [];
                         <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice3" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice" type="radio"  id='choice3' aria-label="Radio button for following text input">
                             </div>
                         </div>
                         <label type="text" class="ans3 form-control" aria-label="Text input with radio button"></label>
@@ -67,7 +67,7 @@ var answers = [];
                         <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <input name="choice4" type="radio" aria-label="Radio button for following text input">
+                              <input name="choice" type="radio"  id='choice4' aria-label="Radio button for following text input">
                             </div>
                         </div>
                         <label type="text" class="ans4 form-control" aria-label="Text input with radio button"></label>
@@ -76,7 +76,7 @@ var answers = [];
                 </div>
                 <button id="next" class="btn btn-secondary">Next</button>
                 
-        
+
         
     </div>
     </div>
@@ -89,7 +89,9 @@ var answers = [];
     var results =[];
     var answers = [];
     var incorrect =[];
+    var right = [];
     var x = 0;
+    var wrong_select = [];
 
 (function($) {
 
@@ -129,8 +131,12 @@ $(document).ready(function(){
                                 incorrect_3: data[i].fields.incorrect_answer_3,
                                 incorrect_4: data[i].fields.incorrect_answer_4,
                                 correct: data[i].fields.correct_answer,
+                                weighting: data[i].fields.weighting,
                                 });
             }
+
+
+
             gerrt(x);
             //console.log(incorrect);
             
@@ -144,14 +150,17 @@ $(document).ready(function(){
         $(document).on("click", '#start', function(){ $('#start-menu').addClass("animated fadeOutLeft slow"); $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto"); });
 
             $(document).on("click","#next", function(){
+
                 x++;
                 if (x >= incorrect.length){
-                    //alert("triggered");
+                    
                     $('.quest').empty();
                     $('.quest').html("quiz finished");
                     $('#next').addClass("disabled").prop('diabled',true);
+                    console.log("final score:" + right.length);
                     }
                 else{
+                        $("input[type='checkbox']").prop('checked', false);
                         gerrt(x);
                     }
                 
@@ -163,7 +172,7 @@ $(document).ready(function(){
 
 function gerrt(x){
 
-    $("div.active-quiz").randomize("div.choice");
+    $("div.active-quiz").randomize("div.choice");console.log(incorrect);
 
     $('.ans0').val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
     $('.ans1').val(incorrect[x].incorrect_2).html(incorrect[x].incorrect_2);
@@ -171,11 +180,45 @@ function gerrt(x){
     $('.ans3').val(incorrect[x].incorrect_4).html(incorrect[x].incorrect_4);
     $('.ans4').val(incorrect[x].correct).html(incorrect[x].correct);
 
-    var ele = $('.member1'); 
+    $('#choice0').val(incorrect[x].incorrect_1);
+    $('#choice1').val(incorrect[x].incorrect_2);
+    $('#choice2').val(incorrect[x].incorrect_3);
+    $('#choice3').val(incorrect[x].incorrect_4);
+    $('#choice4').val(incorrect[x].correct);
+
+    console.log(typeof(incorrect[x].incorrect_1));
+
 
     $('.quest').empty();
     $('.quest').html(results[x]);
     $('.lbl').html(answers[x]);
+
+
+    $('input[type="radio"]').click(function(){
+            if($(this).is(":checked")){
+                let vals = $(this).val();
+                let correct = incorrect[x].correct;
+                var weighting = incorrect[x].weighting;
+                //console.log("checked")
+                //console.log(vals);
+                //console.log(correct);
+                //deduct at the end of the amount of incorrcect
+                if (vals == correct){
+                    //console.log("They correct");
+                    right.push(weighting);
+                    //console.log(right);
+                }else{
+                    
+                }
+            }
+            else if($(this).is(":not(:checked)") || vals !== correct){
+                alert("Checkbox is unchecked.");
+                right.pop(weighting);
+
+                console.log(right);
+
+            }
+        });
     
 }
 
