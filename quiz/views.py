@@ -99,17 +99,23 @@ def quiz_home(request):
 
     return render(request, 'quiz/take_quiz_menu.html', args)
 
+@login_required
+def get_questions(request):
+    quiz_session = request.session.get('quiz_session')
+    if request.is_ajax():
+        if request.method =="GET":
+            serial = serializers.serialize("json", Questions.objects.filter(quiz=quiz_session))
+            response_data = serial
+            del request.session['quiz_session']
+            return HttpResponse(response_data, content_type="application/json")
+
 
 @login_required
 def active_quiz(request, quiz_pk):
     quiz = Quiz.objects.filter(pk=quiz_pk)
     questions = Questions.objects.filter(quiz=quiz_pk)
-    serial = serializers.serialize("json", Questions.objects.filter(quiz=quiz_pk))
+    request.session['quiz_session'] = quiz_pk
 
-    if request.is_ajax():
-        response_data = serial
-        return HttpResponse(response_data, content_type="application/json")
-
-    args={'question': questions, 'quiz': quiz, 'serial': serial}
+    args={'question': questions, 'quiz': quiz}
     return render(request, 'quiz/quiz_active.html', args)
     

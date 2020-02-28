@@ -17,6 +17,7 @@ var answers = [];
                 <button id="start" name="start" class="btn btn-secondary animated infinite tada slower mr-3">Start</button>
                 <button  class="btn btn-danger">Quit</button>
             {% endfor%}
+
         </div>
         <!--RANDOM NUM BETWEEN 1 and 4 TO PLACE IT-->
 
@@ -75,9 +76,6 @@ var answers = [];
                     
                 </div>
                 <button id="next" class="btn btn-secondary">Next</button>
-                
-
-        
     </div>
     </div>
 </div>
@@ -89,7 +87,6 @@ var answers = [];
     var results =[];
     var answers = [];
     var incorrect =[];
-    var right = [];
     var x = 0;
     var wrong_select = [];
 
@@ -113,56 +110,63 @@ $.fn.randomize = function(childElem) {
 
 
 $(document).ready(function(){
-    const url = window.location.href
-    $.ajax({
-        url: url,
-        method: "GET",
-        dataType: "json",
-        success: function(data){
-            
-            for(var i =0; i < data.length; i++){
+    var vals;
+    var correct;
+    var weightings;
+    var right = [];
 
-                results.push(data[i].fields.question);
-                answers.push(data[i].fields.correct_answer);
-                incorrect.push({
-                                quest: data[i].fields.question,
-                                incorrect_1: data[i].fields.incorrect_answer_1,
-                                incorrect_2: data[i].fields.incorrect_answer_2,
-                                incorrect_3: data[i].fields.incorrect_answer_3,
-                                incorrect_4: data[i].fields.incorrect_answer_4,
-                                correct: data[i].fields.correct_answer,
-                                weighting: data[i].fields.weighting,
-                                });
-            }
+    $(document).on("click", '#start', function(){ $('#start-menu').addClass("animated fadeOutLeft slow"); $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto");
+        
+        const url = window.location.href
+        $.ajax({
+            url: "{% url 'get-question' %}",
+            method: "GET",
+            async: true,
+            dataType: "json",
+            success: function(data){
+                
+                for(var i =0; i < data.length; i++){
 
+                    results.push(data[i].fields.question);
+                    answers.push(data[i].fields.correct_answer);
+                    incorrect.push({
+                                    quest: data[i].fields.question,
+                                    incorrect_1: data[i].fields.incorrect_answer_1,
+                                    incorrect_2: data[i].fields.incorrect_answer_2,
+                                    incorrect_3: data[i].fields.incorrect_answer_3,
+                                    incorrect_4: data[i].fields.incorrect_answer_4,
+                                    correct: data[i].fields.correct_answer,
+                                    weighting: data[i].fields.weighting,
+                                    });
+                }
+                $('#start').unbind("click");
 
+                gerrt(x);
+                
+                },
+                error: function(errorData){console.log("error:" + errorData); }
+            })
+         });
 
-            gerrt(x);
-            //console.log(incorrect);
-            
-            },
-            error: function(errorData){
-                console.log("error");
-
-            }
-        })
-
-        $(document).on("click", '#start', function(){ $('#start-menu').addClass("animated fadeOutLeft slow"); $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto"); });
-
-            $(document).on("click","#next", function(){
-
+        $(document).on("click","#next", function(){
                 x++;
+                if(vals == correct){
+                    right.push(weightings);
+                    console.log("vals:" + vals + " " + "Correct answ:" + correct);}
+                    console.log(typeof(weightings));
+
                 if (x >= incorrect.length){
+                    let sum = 0;
+                    $.each(right, function(){sum+=parseInt(this) || 0;});
+                    console.log("sum:" + sum);
                     
                     $('.quest').empty();
                     $('.quest').html("quiz finished");
                     $('#next').addClass("disabled").prop('diabled',true);
                     console.log("final score:" + right.length);
+                    console.log(right);
                     }
-                else{
-                        $("input[type='checkbox']").prop('checked', false);
-                        gerrt(x);
-                    }
+                else{ $("input[type='radio']").prop('checked', false); gerrt(x); }
                 
 
             });
@@ -174,11 +178,11 @@ function gerrt(x){
 
     $("div.active-quiz").randomize("div.choice");console.log(incorrect);
 
-    $('.ans0').val(incorrect[x].incorrect_1).html(incorrect[x].incorrect_1);
-    $('.ans1').val(incorrect[x].incorrect_2).html(incorrect[x].incorrect_2);
-    $('.ans2').val(incorrect[x].incorrect_3).html(incorrect[x].incorrect_3);
-    $('.ans3').val(incorrect[x].incorrect_4).html(incorrect[x].incorrect_4);
-    $('.ans4').val(incorrect[x].correct).html(incorrect[x].correct);
+    $('.ans0').html(incorrect[x].incorrect_1);
+    $('.ans1').html(incorrect[x].incorrect_2);
+    $('.ans2').html(incorrect[x].incorrect_3);
+    $('.ans3').html(incorrect[x].incorrect_4);
+    $('.ans4').html(incorrect[x].correct);
 
     $('#choice0').val(incorrect[x].incorrect_1);
     $('#choice1').val(incorrect[x].incorrect_2);
@@ -186,41 +190,21 @@ function gerrt(x){
     $('#choice3').val(incorrect[x].incorrect_4);
     $('#choice4').val(incorrect[x].correct);
 
-    console.log(typeof(incorrect[x].incorrect_1));
-
-
     $('.quest').empty();
     $('.quest').html(results[x]);
     $('.lbl').html(answers[x]);
-
-
-    $('input[type="radio"]').click(function(){
-            if($(this).is(":checked")){
-                let vals = $(this).val();
-                let correct = incorrect[x].correct;
-                var weighting = incorrect[x].weighting;
-                //console.log("checked")
-                //console.log(vals);
-                //console.log(correct);
-                //deduct at the end of the amount of incorrcect
-                if (vals == correct){
-                    //console.log("They correct");
-                    right.push(weighting);
-                    //console.log(right);
-                }else{
-                    
-                }
-            }
-            else if($(this).is(":not(:checked)") || vals !== correct){
-                alert("Checkbox is unchecked.");
-                right.pop(weighting);
-
-                console.log(right);
-
-            }
-        });
     
 }
+
+$('input[type="radio"]').click(function(){
+    if($(this).is(":checked")){
+        vals = $(this).val();
+        correct = incorrect[x].correct;
+        weightings = parseInt(incorrect[x].weighting);
+        console.log("vals:" + vals + "Correct:" + correct + "Weighting:" + weighting);
+        console.log(typeof(vals) + "vs" + "" + typeof(correct));
+    }
+    else if($(this).is(":not(:checked)")){vals = $(this).val();}});
 
 
     
