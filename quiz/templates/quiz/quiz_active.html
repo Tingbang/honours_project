@@ -10,6 +10,13 @@ var answers = [];
 <!--Quiz Opening-->
 <div class="row justify-content-center">
     <div class="col-12">
+
+        <div id="finish-menu" class="d-none">
+            <h2 class="text-center mod-title">Results</h2>
+            <h3 class= "text-center results-t">Wrong Questions</h3>
+            <p class="wrong-quest"></p>
+        
+        </div>
         <div id="start-menu" class="content-section mx-auto animated fadeInLeftBig slow">    
             {% for quiz in quiz%}
                 <h2 class="">{{quiz.title}}</h2>
@@ -17,11 +24,8 @@ var answers = [];
                 <button id="start" name="start" class="btn btn-secondary animated infinite tada slower mr-3">Start</button>
                 <button  class="btn btn-danger">Quit</button>
             {% endfor%}
-
         </div>
-        <!--RANDOM NUM BETWEEN 1 and 4 TO PLACE IT-->
 
-        
         <div class="active-quiz d-none">
                 <h2 class="quest text-center"></h2>
             <div class="choice">
@@ -89,6 +93,11 @@ var answers = [];
     var incorrect =[];
     var x = 0;
     var wrong_select = [];
+    var wrong_questions = [];
+    var vals;
+    var correct;
+    var weightings;
+    var right = [];
 
 (function($) {
 
@@ -110,10 +119,6 @@ $.fn.randomize = function(childElem) {
 
 
 $(document).ready(function(){
-    var vals;
-    var correct;
-    var weightings;
-    var right = [];
 
     $(document).on("click", '#start', function(){ $('#start-menu').addClass("animated fadeOutLeft slow"); $('.active-quiz').removeClass('d-none').addClass("animated fadeInLeft slow mx-auto");
         
@@ -140,8 +145,10 @@ $(document).ready(function(){
                                     });
                 }
                 $('#start').unbind("click");
+        
+                set_questions(x);
+    
 
-                gerrt(x);
                 
                 },
                 error: function(errorData){console.log("error:" + errorData); }
@@ -149,34 +156,48 @@ $(document).ready(function(){
          });
 
         $(document).on("click","#next", function(){
-                x++;
-                if(vals == correct){
-                    right.push(weightings);
-                    console.log("vals:" + vals + " " + "Correct answ:" + correct);}
-                    console.log(typeof(weightings));
+            console.log(x + "x");
+            console.log(vals);
+            console.log(correct);
+            console.log(incorrect.length);
+            console.log(incorrect[x].quest);
 
-                if (x >= incorrect.length){
-                    let sum = 0;
-                    $.each(right, function(){sum+=parseInt(this) || 0;});
-                    console.log("sum:" + sum);
-                    
-                    $('.quest').empty();
+            if(vals == correct){
+                right.push(weightings);
+                x++;
+            
+            }else{ 
+                wrong_questions.push(incorrect[x].quest);
+                x++;
+            }
+
+            if (x == incorrect.length){ 
+                console.log("HEHE")
+                let sum = 0;
+                $.each(right, function(){sum+=parseInt(this) || 0});
+                $('.quest').empty();
                     $('.quest').html("quiz finished");
                     $('#next').addClass("disabled").prop('diabled',true);
-                    console.log("final score:" + right.length);
-                    console.log(right);
-                    }
-                else{ $("input[type='radio']").prop('checked', false); gerrt(x); }
-                
+                    $('.active-quiz').addClass("animated fadeOutLeft slow mx-auto ");
+                    $('#finish-menu').removeClass("d-none").addClass("animated content-section fadeInLeft slow mx-auto");
+                    $('.results-t').html("Final Score: " + sum + '/' + results.length);
 
+                    for(let j = 0; j < wrong_questions.length; j++){
+                        $('.wrong-quest').append(wrong_questions[j]);
+                        
+                    }
+                    
+                    }else{ $("input[type='radio']").prop('checked', false); set_questions(x); }
+                    
+                
             });
 
         });
 
 
-function gerrt(x){
+function set_questions(x){
 
-    $("div.active-quiz").randomize("div.choice");console.log(incorrect);
+    $("div.active-quiz").randomize("div.choice");
 
     $('.ans0').html(incorrect[x].incorrect_1);
     $('.ans1').html(incorrect[x].incorrect_2);
@@ -201,10 +222,8 @@ $('input[type="radio"]').click(function(){
         vals = $(this).val();
         correct = incorrect[x].correct;
         weightings = parseInt(incorrect[x].weighting);
-        console.log("vals:" + vals + "Correct:" + correct + "Weighting:" + weighting);
-        console.log(typeof(vals) + "vs" + "" + typeof(correct));
     }
-    else if($(this).is(":not(:checked)")){vals = $(this).val();}});
+    else if($(this).is(":not(:checked)")){console.log("brebbb");}});
 
 
     
