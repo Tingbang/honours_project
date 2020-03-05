@@ -1,0 +1,63 @@
+<!--Modify Quiz/Questions to change-->
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{%block title%} 
+<div class="row justify-content-center">
+    <div class="col-4">
+        <h1 class="text-center mod-title">Statistics</h1>
+        <legend class="text-center">{{average}}</legend>  
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <canvas id="bar-chart"></canvas>
+    </div>
+
+    
+</div>
+
+{% endblock content%}
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+        console.log("{{choice_label|safe}}");
+        console.log("{{choice_colours|safe}}");
+
+        var ctx = document.getElementById("bar-chart").getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data:
+            {
+            labels: {{choice_label|safe}},
+            
+            datasets: [{
+                        data: {{choice_data|safe}},
+                        backgroundColor: ["red", "blue", "orange", "pink", "purple", "yellow", "teal"],
+                        label: "Recent Quiz Scores",
+                        
+                    }],
+                    
+                },
+            options:{
+                
+
+            }
+                });
+
+    });
+
+
+    
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+{% endblock javascript %}
+
+
+

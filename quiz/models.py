@@ -40,7 +40,6 @@ class Questions(models.Model):
     def get_absolute_url(self):
         return self.quiz.get_absolute_url()
         
-
     class Meta:
         verbose_name_plural = "questions"
 
@@ -57,15 +56,16 @@ class Choice(models.Model):
         verbose_name_plural = "choices"
 
 
-
-class Results(models.Model):
+class Result(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    score = models.FloatField(default = 0)
-    
+    score = models.CharField(max_length = 25)
 
+    def __str__(self):
+        return 'Quiz:{} - {}'.format(self.quiz,self.user)
+    
     class meta:
-        verbose_name_plural="results"
+        verbose_name_plural="result"
 
 
 #Results Table

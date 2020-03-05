@@ -1,0 +1,1 @@
+> If you redirect after already starting a quiz using the browser buttons, questions dont load unless refreshed

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CreateQuizForm
 from quiz.forms import CreateQuizForm
 from quiz.forms import CreateQuestionForm
-from quiz.models import Quiz, Questions
+from quiz.models import Quiz, Questions, Result
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.html import strip_tags
 from django.core import serializers
@@ -106,7 +106,7 @@ def get_questions(request):
         if request.method =="GET":
             serial = serializers.serialize("json", Questions.objects.filter(quiz=quiz_session))
             response_data = serial
-            del request.session['quiz_session']
+            #del request.session['quiz_session']
             return HttpResponse(response_data, content_type="application/json")
 
 
@@ -118,4 +118,24 @@ def active_quiz(request, quiz_pk):
 
     args={'question': questions, 'quiz': quiz}
     return render(request, 'quiz/quiz_active.html', args)
+
+@login_required
+def store_results(request):
+    quiz_session = request.session.get('quiz_session')
+    if request.is_ajax():
+        if request.method == "POST":
+            quiz_session = request.session.get('quiz_session')
+            id = Quiz.objects.get(id=quiz_session)
+            #destroysession
+            sum = request.POST.get("sum")
+            user = request.user
+            instance = Result.objects.create(quiz=id, user=user, score=sum)
+            instance.save()
+            del request.session['quiz_session']
+            return HttpResponse("Stored")
+
+            
+
+            
+            
     

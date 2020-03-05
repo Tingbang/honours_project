@@ -19,7 +19,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     
-
+    "stats.apps.StatsConfig",
     'quiz.apps.QuizConfig',
     'users.apps.UsersConfig',
     'dashboard.apps.DashboardConfig',

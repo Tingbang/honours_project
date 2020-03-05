@@ -9,6 +9,7 @@ urlpatterns =[
     url(r'^view-quiz/(?P<pk>\d+)/(?P<auth>[\w\-]+)/(?P<quz>[\w|\W]+)/$', views.view_my_quiz, name ='view-quiz'),
     url(r'active-quiz/(?P<quiz_pk>\d+)/$', views.active_quiz, name='active-quiz'),
     url(r'get_questions/', views.get_questions, name='get-question'),
+    url(r'store_results/', views.store_results, name='store-results'),
     path('take-quiz', views.quiz_home, name="take-quiz"),
     
 ]
