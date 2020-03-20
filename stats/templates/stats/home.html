@@ -6,28 +6,88 @@
 <div class="row justify-content-center">
     <div class="col-4">
         <h1 class="text-center mod-title">Statistics</h1>
-        <legend class="text-center">{{average}}</legend>  
+        <!-- {% for cr in test1 %}
+            <p>{{cr}}</p>
+            <p>{{cr.quiz__title}}</p>
+            <p>{{cr.scores}}</p>
+        {% endfor %} -->
+
+        <script>
+            var test_name = [];
+            var test_data =[];
+            var choice_data = [];
+            var choice_data_labels = [];
+            var colours = [];
+            var colours2 = [];
+            var letters = '0123456789ABCDEF';
+            
+            var dynamic = function(){
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
+            {% for z in choice_data %}
+
+            
+            choice_data_labels.push("{{z.quiz__title}}");
+            colours2.push(dynamic());
+
+            {% endfor %}
+
+            {% for x in test1 %}
+                test_name.push("{{x.quiz__title}}");
+                test_data.push("{{x.scores|floatformat:'0'}}");
+                //console.log(test_name);
+                //colours.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+                colours.push(dynamic());
+                //console.log(colours);
+            {% endfor %}
+        </script>
+
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-sm-6">
+<div class="row justify-content-left">
+    <div class="col-sm-6 chart-display">
+        <h1 class="text-center mod-title">Average of Recent Tests</h1>
         <canvas id="bar-chart"></canvas>
     </div>
-
-    
+    <div class="col-sm-4">
+        <h1 class="text-center mod-title">My Average Scores</h1>
+        <canvas id="bar-chart2"></canvas>
+    </div> 
 </div>
+
+
+<!--My Quiz Statistics-->
+<div class="row justify-content-center mt-4 pt-3">
+    <div class="col-sm-4 stats">
+        <p class="text-center" >One</p>
+
+    </div>
+    <div class="col-sm-4 stats">
+        <p class="text-center">Two</p>
+
+    </div>
+    <div class="col-sm-4 stats">
+        <p class="text-center" >Three</p>
+
+    </div>
+</div>
+
 
 {% endblock content%}
 
-
+<!--Ajax function that queries the db based on the quiz name, the user can see their average score for each of the quizzess they have ever taken 7/03/2020 -->
 {% block javascript %}
 <script>
     $(document).ready(function(){
-        console.log("{{choice_label|safe}}");
-        console.log("{{choice_colours|safe}}");
+        //console.log("{{choice_label|safe}}");
+        //console.log("{{choice_colours|safe}}");
 
         var ctx = document.getElementById("bar-chart").getContext('2d');
         var myChart = new Chart(ctx, {
@@ -38,8 +98,26 @@
             
             datasets: [{
                         data: {{choice_data|safe}},
-                        backgroundColor: ["red", "blue", "orange", "pink", "purple", "yellow", "teal"],
+                        backgroundColor: colours2,
                         label: "Recent Quiz Scores",
+                        
+                    }],
+                    
+                },
+            options:{}
+        });
+
+        var ctx1 = document.getElementById("bar-chart2").getContext('2d');
+        var myChart = new Chart(ctx1, {
+        type: 'horizontalBar',
+        data:
+            {
+            labels:    test_name,
+            
+            datasets: [{
+                        data: test_data ,
+                        backgroundColor: colours,
+                        label: "Average Score",
                         
                     }],
                     
@@ -52,6 +130,9 @@
 
     });
 
+
+
+    $('#something').change();
 
     
 </script>

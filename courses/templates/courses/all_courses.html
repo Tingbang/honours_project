@@ -1,0 +1,21 @@
+{% extends "dashboard/base.html" %}
+
+
+{% block content %}
+<div class="row justify-content-center">
+    <h1 class="text-center">{{subject}}</h1>
+</div>
+
+<div class="row justify-content-center">
+    {% for course in all_courses%}
+    <div class="col-4">
+        <p class="text-center"></p>{{course}}
+    </div>
+    {% endfor %}
+    
+
+</div>
+
+
+
+{% endblock content %}

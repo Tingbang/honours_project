@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Quiz, Questions
-
 from django.utils.html import strip_tags
 
 level_choice = (

@@ -10,6 +10,7 @@ urlpatterns =[
     url(r'active-quiz/(?P<quiz_pk>\d+)/$', views.active_quiz, name='active-quiz'),
     url(r'get_questions/', views.get_questions, name='get-question'),
     url(r'store_results/', views.store_results, name='store-results'),
+    url(r'get_search', views.get_search_queryset, name='get-search'),
     path('take-quiz', views.quiz_home, name="take-quiz"),
     
 ]

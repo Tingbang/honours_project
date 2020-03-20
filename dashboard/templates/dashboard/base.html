@@ -12,6 +12,8 @@
     
     <script src="https://kit.fontawesome.com/11cb439d0b.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500&display=swap" rel="stylesheet">
+    
     
     {% if title%}
     <title>{{title}}</title>
@@ -25,7 +27,7 @@
     <nav class="navbar navbar-expand-lg fixed-top pb-1">
         <div class="container-fluid p-0">
             <img class="pr-1" id="logo" src="/media/logo.png" alt="logo">
-            <a style="color: #FFFF" class="navbar-brand mr-3" href="{% url 'blog-home' %}">Revision Tool</a>
+            <a style="color: #FFFF" class="navbar-brand mr-3 head-title" href="{% url 'blog-home' %}">Revision Tool</a>
             <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -62,7 +64,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{%url 'course-landing' %}">
               <span><i class="fas fa-user-graduate pr-2"></i></span>
               <span>Courses</span> 
             </a>

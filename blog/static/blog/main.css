@@ -2,7 +2,7 @@ body {
     background-color: #2A3452;
     color: #333333;
     margin-top: 4rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: #fff;
   }
   
@@ -27,7 +27,22 @@ body {
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
   }
-  
+  .subject-item{
+    background-color: #1E2740 !important;
+    color: #F975A0 !important; 
+    margin-bottom: 12px;
+
+  }
+  .subject-item a{
+    color: #F975A0 !important; 
+    font-size: 20px;
+  }
+
+  .subject-item:hover{
+    background-color: #2A3452 !important;
+    color: #FFF !important;
+  }
+
   .content-section {
   
     background: #ffffff;
@@ -100,6 +115,18 @@ body {
     
     background-color: #FF4481;
   }
+
+  .stats{
+    box-shadow: 2px 2px 2px solid grey !important;
+    border-radius: 1px solid;
+    border-style: solid;
+    opacity: 25%;
+
+  }
+
+  /* .chart-display{
+    
+  } */
   
   .article-metadata {
     padding-bottom: 1px;
@@ -169,7 +196,7 @@ body {
 .side-nav{
   position: fixed;
   float: left;
-  width: 240px;
+  width: 225px;
   min-height: 100vh;
   background-color: #171F38;
   text-decoration: none;
@@ -196,6 +223,15 @@ body {
   #logo{
     padding-right: 17px;
     padding-left: 5px;
+  }
+
+  .course-sect{
+    height: 50vh !important;
+    color: #FF4481;
+    
+    background-color: #171F38 !important;
+    overflow-y: hidden;
+
   }
 
 
@@ -246,3 +282,4 @@ body {
 .side-nav ul li .dropdown-menu{
   background-color: #2A3452 !important;
 }
+

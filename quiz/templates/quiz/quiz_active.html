@@ -186,9 +186,9 @@ $(document).ready(function(){
                     data: {
                         sum: sum,
                         csrfmiddlewaretoken: "{{ csrf_token }}"
-                          },
+                        },
                     success: function(data){
-                        alert(data);
+  
                         
                     },
                         error: function(errorData){console.log("error:" ,errorData); }

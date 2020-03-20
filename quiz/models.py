@@ -59,7 +59,7 @@ class Choice(models.Model):
 class Result(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    score = models.CharField(max_length = 25)
+    score = models.IntegerField(default=0)
 
     def __str__(self):
         return 'Quiz:{} - {}'.format(self.quiz,self.user)

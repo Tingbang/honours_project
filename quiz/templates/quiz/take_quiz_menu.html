@@ -4,11 +4,14 @@
 
 <div class="row justify-content-center">
     <div class="col-8">
-        <legend class="text-center"> Quizzes</legend>
+        <h1 class="text-center mod-title"> Quizzes</h1>
         <legend class="text-center text-muted"> A description on how to search for quizzes</legend>
-        <div class="form-group">
-            <input placeholder="Filter Quizzes" type ="text" class="input-large col-xs-8 form-control mt-3 mb-3">
-        </div>
+        <div class="input-group select-group">
+            {% csrf_token %}
+            <input type="text" name="q" id="id_q" class="form-control form-control-sm text-center" placeholder="Search..."/>
+
+    
+            </div>
     </div>
 </div>
 
@@ -41,8 +44,41 @@
             </tbody>
             </table>
 
+            <div class="results" id="results"></div>
+
     </div><!--End of Column-->
   </div>
 </div><!--End of Row-->
 
 {% endblock content %}
+
+{% block javascript %}
+
+<script>
+     $('#id_q').keyup(function(){
+
+        $.ajax({
+          url: "{% url 'get-search'%}",
+          type: "GET",
+          data: {
+              'search': $('#id_q').val(),
+              'csrfmiddlewaretoken': "{{ csrf_token }}"
+          },
+          success: function(data){
+            $('#results').html(data);
+            console.log(data);
+
+
+          },//End of Success
+          error: function(errorData){
+            console.log("error");
+            console.log(errorData);
+          }
+        })
+
+
+    });
+
+</script>
+
+{% endblock javascript %}

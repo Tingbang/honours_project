@@ -18,7 +18,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
+    "courses.apps.CoursesConfig",
     "stats.apps.StatsConfig",
     'quiz.apps.QuizConfig',
     'users.apps.UsersConfig',
@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bleach'
     
 ]
 

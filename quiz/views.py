@@ -7,6 +7,7 @@ from quiz.models import Quiz, Questions, Result
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.html import strip_tags
 from django.core import serializers
+from django.db.models import Q
 import json
 from django.http import JsonResponse
 
@@ -19,6 +20,9 @@ def create_quiz(request):
             title = form.cleaned_data.get('title')
             topic = form.cleaned_data.get('topic')
             instance = form.save(commit=False)
+            instance.title = title
+            instance.topic = topic
+
             instance.author = request.user
             instance.save()
             return HttpResponseRedirect('/my_quiz')
@@ -41,6 +45,12 @@ def create_questions(request):
             incorrect_answer_4  = form.cleaned_data.get('incorrect_answer_4')
             instance = form.save(commit=False)
             instance.quiz = newquiz
+            instance.question = question
+            instance.correct_answer = correct_answer
+            instance.incorrect_answer_1 = incorrect_answer_1
+            instance.incorrect_answer_2 = incorrect_answer_2
+            instance.incorrect_answer_3 = incorrect_answer_3
+            instance.incorrect_answer_4 = incorrect_answer_4
             instance.save()
             
             return HttpResponseRedirect('/my_quiz')
@@ -69,13 +79,18 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
             incorrect_answer_2  = form.cleaned_data.get('incorrect_answer_2')
             incorrect_answer_3  = form.cleaned_data.get('incorrect_answer_3')
             incorrect_answer_4  = form.cleaned_data.get('incorrect_answer_4')
-
             response_data ={}
-
             response_data['question'] = question
 
             instance = form.save(commit=False)
+
             instance.quiz = quiz
+            instance.question = question
+            instance.correct_answer = correct_answer
+            instance.incorrect_answer_1 = incorrect_answer_1
+            instance.incorrect_answer_2 = incorrect_answer_2
+            instance.incorrect_answer_3 = incorrect_answer_3
+            instance.incorrect_answer_4 = incorrect_answer_4
             instance.save()
            
             return HttpResponse(json.dumps(response_data), content_type="application/json")            
@@ -89,14 +104,10 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
     
     return render(request, 'quiz/modify_quiz.html', args)
 
-
 @login_required
 def quiz_home(request):
     all_Q = Quiz.objects.all()
-
     args = {'quiz': all_Q}
-
-
     return render(request, 'quiz/take_quiz_menu.html', args)
 
 @login_required
@@ -132,10 +143,22 @@ def store_results(request):
             instance = Result.objects.create(quiz=id, user=user, score=sum)
             instance.save()
             del request.session['quiz_session']
-            return HttpResponse("Stored")
+            return HttpResponse("")
 
             
+@login_required
+def get_search_queryset(request,query=None):
 
+    if request.method == "GET":
+        search_text = request.GET.get('search')
+        search_text.split(" ")
+        
+        queryset_search = Quiz.objects.filter(Q(title__contains = search_text) | Q(subject__contains =search_text) | Q(level__icontains =search_text)| Q(topic__icontains =search_text))
+
+    else:
+        search_text = ''
+
+    return HttpResponse(queryset_search) 
             
             
     

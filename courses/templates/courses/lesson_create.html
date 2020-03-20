@@ -1,0 +1,45 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+<div class="row justify-content-center">
+    <div class="col-sm-8">
+        <form id="frm" method="POST"action="">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input class="btn btn-dark" type="submit" name="submit" value="submit">
+            <input class="btn btn-primary" type="button" id="add" name="" value="add new">
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+$(document).ready(function(){
+    var newInputItem;
+    var counter = 0;
+  
+    $('#add').on('click', function(){
+                  
+        if(counter == 2){
+            $('#add').prop("disabled", true);
+            //alert("YEHAW");
+        }else{
+            counter= counter + 1;
+            console.log(counter);
+            newInputItem = $('<label for ="additional_'+counter+'">Additional Content</label><textarea id="additional_' + counter +'"class="textarea form-control" cols=40 rows=10></textarea>');
+            $('#div_id_all_the_content').append(newInputItem);
+
+        }
+        
+    });
+});
+
+</script>
+
+
+
+{% endblock javascript %}
