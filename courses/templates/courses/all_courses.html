@@ -1,18 +1,31 @@
 {% extends "dashboard/base.html" %}
 
-
 {% block content %}
-<div class="row justify-content-center">
-    <h1 class="text-center">{{subject}}</h1>
-</div>
 
 <div class="row justify-content-center">
-    {% for course in all_courses%}
     <div class="col-4">
-        <p class="text-center"></p>{{course}}
+        <h1 class="text-center mod-title">{{subject}} Courses'</h1>
     </div>
+
+</div>
+<div class="row">
+
+    {% for course in all_courses %}
+    {% if course.published %}
+    <div class="col-xs-4 mt-4 m-4">
+        <div data-aos="flip-left" data-aos-easing="ease-out-cubic"
+        data-aos-duration="2000" id="course-card"class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{course}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">by: {{course.user}}</h6>
+              <p class="card-text">{{course.description}}</p>
+              <a href="{% url 'view-this-course' course_pk=course.pk %}" class="card-link mod-title text-center">View</a>
+
+            </div>
+          </div>
+    </div>
+    {% endif %}
     {% endfor %}
-    
 
 </div>
 

@@ -25,7 +25,10 @@
 
   </div>
   <div class="col-sm-3 course-sect m-2">
-    <legend class="text-center">My Published Courses</legend>
+    <legend class="text-center">My Courses</legend>
+    {% for courses in my_published %}
+    <div id="subject-hover" class="subject-item text-center"><a href="{% url 'view-this-course' course_pk=courses.id %}">{{courses}}</a></div>
+    {% endfor %}
   </div>
 </div>
 

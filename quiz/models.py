@@ -60,6 +60,7 @@ class Result(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     score = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 'Quiz:{} - {}'.format(self.quiz,self.user)

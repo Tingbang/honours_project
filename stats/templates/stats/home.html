@@ -6,45 +6,6 @@
 <div class="row justify-content-center">
     <div class="col-4">
         <h1 class="text-center mod-title">Statistics</h1>
-        <!-- {% for cr in test1 %}
-            <p>{{cr}}</p>
-            <p>{{cr.quiz__title}}</p>
-            <p>{{cr.scores}}</p>
-        {% endfor %} -->
-
-        <script>
-            var test_name = [];
-            var test_data =[];
-            var choice_data = [];
-            var choice_data_labels = [];
-            var colours = [];
-            var colours2 = [];
-            var letters = '0123456789ABCDEF';
-            
-            var dynamic = function(){
-                var r = Math.floor(Math.random() * 255);
-                var g = Math.floor(Math.random() * 255);
-                var b = Math.floor(Math.random() * 255);
-                return "rgb(" + r + "," + g + "," + b + ")";
-            }
-
-            {% for z in choice_data %}
-
-            
-            choice_data_labels.push("{{z.quiz__title}}");
-            colours2.push(dynamic());
-
-            {% endfor %}
-
-            {% for x in test1 %}
-                test_name.push("{{x.quiz__title}}");
-                test_data.push("{{x.scores|floatformat:'0'}}");
-                //console.log(test_name);
-                //colours.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
-                colours.push(dynamic());
-                //console.log(colours);
-            {% endfor %}
-        </script>
 
     </div>
 </div>
@@ -52,14 +13,41 @@
 
 {% block content %}
 <div class="row justify-content-left">
-    <div class="col-sm-6 chart-display">
-        <h1 class="text-center mod-title">Average of Recent Tests</h1>
-        <canvas id="bar-chart"></canvas>
-    </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <h1 class="text-center mod-title">My Average Scores</h1>
+        <legend class="text-muted text-center">(Average of quizzes taken)</legend>
+        <div class="form-group">
+            <div class="col-sm-4 mx-auto">
+                <label for="sel1">Chart Type:</label>
+                <select class="form-control input-sm" id="chartType">
+                    <option value="pie">Pie</option>
+                    <option value="doughnut">Doughnut</option>
+                    <option value="bar">Bar</option>
+                    <option value="horizontalBar">HorizontalBar</option>
+                  </select>    
+            </div>
+            
+          </div>
         <canvas id="bar-chart2"></canvas>
-    </div> 
+        
+    </div>
+    
+    <div class="col-sm-6">
+        <h1 class="text-center mod-title">Recent Scores</h1>
+        <div class="form-group">
+            <div class="col-sm-4 mx-auto">
+                <label for="sel1">Results for:</label>
+                <select class="form-control input-sm" id="chartType2">
+                    {% for quiz in available_quiz %}
+                    <option value="{{quiz.quiz__title}}">{{quiz.quiz__title}}</option>
+                    {% endfor %}
+                  </select>    
+            </div>
+            
+          </div>
+          <canvas id="bar-chart3"></canvas>
+
+    </div>
 </div>
 
 
@@ -88,51 +76,167 @@
     $(document).ready(function(){
         //console.log("{{choice_label|safe}}");
         //console.log("{{choice_colours|safe}}");
+        var quiz_check1 = "test quiz";
 
-        var ctx = document.getElementById("bar-chart").getContext('2d');
-        var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data:
-            {
-            labels: {{choice_label|safe}},
+        updateChart2();
+        var select_default ='pie';
+
+        var test_name = [];
+        var test_data =[];
+        var choice_data = [];
+        var choice_data_labels = [];
+        var colours = [];
+        var colours2 = [];
+        var letters = '0123456789ABCDEF';
+        var attempts = [];
+        
+        var arry1 = [];
+        var timestamp = [];
             
-            datasets: [{
-                        data: {{choice_data|safe}},
-                        backgroundColor: colours2,
-                        label: "Recent Quiz Scores",
-                        
-                    }],
-                    
-                },
-            options:{}
-        });
+        var dynamic = function(){
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
+            {% for z in choice_data %}
+                choice_data_labels.push("{{z.quiz__title}}");
+                colours2.push(dynamic());
+            {% endfor %}
+
+            {% for x in test1 %}
+                test_name.push("{{x.quiz__title}}");
+                test_data.push("{{x.scores|floatformat:'0'}}");
+                console.log(test_data);
+                //colours.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+                colours.push(dynamic());
+                //console.log(colours);
+            {% endfor %}
+
 
         var ctx1 = document.getElementById("bar-chart2").getContext('2d');
+        var ctx2 = document.getElementById("bar-chart3").getContext('2d');
         var myChart = new Chart(ctx1, {
-        type: 'horizontalBar',
+        type: select_default,
         data:
             {
-            labels:    test_name,
+            labels: test_name,
             
             datasets: [{
-                        data: test_data ,
+                        data: test_data,
                         backgroundColor: colours,
                         label: "Average Score",
                         
                     }],
                     
                 },
-            options:{
+            options:{}
+        });
+        var myChart2 = new Chart(ctx2, {
+            type: 'line',
+            data:
+                {
+                labels: timestamp,
                 
+                datasets: [{
+                            data: arry1,
+                            backgroundColor: 'rgba(185, 214, 200, 0.75)',
+                            borderColor: 'rgba(255, 255, 255, 0.5)',
+                            label: "PreviousScore",
+                            
+                        }],
+                        
+                    },
+                options:{}
+            });
 
-            }
+        $('#chartType').on('change', function(){
+            select_default = this.value;
+            console.log(select_default);
+            updateChart();
+        });
+
+        $('#chartType2').on('change', function(){
+            quiz_check1 = this.value;
+            updateChart2();
+        });
+
+    function updateChart(){
+        myChart.destroy();
+
+        myChart = new Chart(ctx1, {
+        type: select_default,
+        data:
+            {
+            labels: test_name,
+            
+            datasets: [{
+                        data: test_data,
+                        backgroundColor: colours,
+                        label: "Average Score",
+                        
+                    }],
+                    
+                },
+            options:{}
+        });
+    }
+
+    function updateChart2(){
+        $.ajax({
+            url: "{% url 'get-previous' quiz_check="+ quiz_check1 +" %}",
+            method: "GET",
+            async: true,
+            data: {
+                quiz_check: quiz_check1,
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            success: function(data){
+                arry1 = [];
+                timestamp = [];
+                attempts =[];
+                
+            $.each(data, function(i){
+                    arry1.push(data[i].fields.score);
+                    timestamp.push(data[i].fields.timestamp);
+                    attempts.push("Attempt " +(i+1));
+
                 });
+                draw_chart();
+
+            },
+                error: function(errorData){console.log("error:" ,errorData); }
+            });
+
+
+        }
+
+    function draw_chart(){
+        myChart2.destroy();
+           
+        myChart2 = new Chart(ctx2, {
+        type: 'line',
+        data:
+            {
+            labels: attempts,
+            
+            datasets: [{
+                        data: arry1,
+                        backgroundColor: 'rgba(185, 214, 200, 0.75)',
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        label: "Score",
+                        
+                    }],
+                    
+                },
+            options:{}
+        });
+    }
 
     });
 
-
-
-    $('#something').change();
+   
 
     
 </script>

@@ -1,0 +1,42 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-4">
+        <h1 class="text-center mod-title">My Courses</h1>
+    </div>
+
+</div>
+<div class="row">
+
+    {% for course in my_courses %}
+    <div class="col-xs-4 mt-4 m-4">
+        <div data-aos="flip-left" data-aos-easing="ease-out-cubic"
+        data-aos-duration="2000" id="course-card"class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{course}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">by: {{course.user}}</h6>
+              <p class="card-text">{{course.description}}</p>
+              <a href="{% url 'modify-course' course_pk=course.pk %}" class="card-link mod-title">Modify</a>
+              <a href="{% url 'delete-course' course_pk=course.pk %}" class="card-link mod-title ml-1 mr-2">Delete</a>
+              {% if course.published is True %}
+                <p>Status: Published</p>
+                <a href="{% url 'publish' course_pk=course.pk pub=False  %}" class="card-link mod-title">Make Private</a>
+              {%else%}
+              <p>Status: Private</p>
+              <a href="{% url 'publish' course_pk=course.pk pub=True  %}" class="card-link mod-title">Make Public</a>
+              {% endif %}
+            
+            </div>
+          </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+
+
+{% endblock javascript %}

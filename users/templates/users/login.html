@@ -1,4 +1,4 @@
-{% extends "dashboard/base.html" %}
+{% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -11,8 +11,8 @@
     </div>
 
     {% else %}
-    <div class="row justifty-content-center">
-        <div class="content-section mx-auto col-8">
+    <div class="row justify-content-center">
+        <div class="content-section col-xs-12 col-xl-4 col-lg-4 col-md-8 col-sm-4">
             <form method="POST">
                 {% csrf_token%}
                 <fieldset class="form-group">

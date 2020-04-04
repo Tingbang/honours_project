@@ -5,8 +5,22 @@ body {
     font-family: 'Roboto', sans-serif;
     color: #fff;
   }
-  
 
+  /*Landing*/
+  #landing-title{
+    font-size: 85px !important;
+  }
+  #landing-info{
+    font-size: 40px !important;
+    display: inline-block !important;
+  }
+
+  .fa-greater-than-equal,.fa-less-than-equal{
+    color: #FF4481 !important;
+  
+  }
+
+  /*Landing*/
   
   ul {
     margin: 0;
@@ -71,6 +85,13 @@ body {
     margin: 0px auto !important;
     background-color: #171F38!important;
   }
+  .wordwrap { 
+    white-space: pre-wrap;      /* CSS3 */   
+    white-space: -moz-pre-wrap; /* Firefox */    
+    white-space: -pre-wrap;     /* Opera <7 */   
+    white-space: -o-pre-wrap;   /* Opera 7 */    
+    word-wrap: break-word;      /* IE */
+ }
   
   .tablewrap{
     position: relative;
@@ -79,7 +100,15 @@ body {
     overflow-y: scroll;
     
   }
-  
+  #course-card{
+    color:white !important;
+    background-color: #171F38;
+    border-radius: 1rem;
+  }
+  #course-card:hover{
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+  }
   .article-title {
     color: #444444;
   }
@@ -185,11 +214,9 @@ body {
 }
 
 .quest-list{
-
   overflow-y: scroll;
   height: 400px !important;
   width: 100% !important;
-
 
 }
 
@@ -228,10 +255,16 @@ body {
   .course-sect{
     height: 50vh !important;
     color: #FF4481;
-    
     background-color: #171F38 !important;
     overflow-y: hidden;
-
+  }
+  .course-sect-main{
+    height: 50vh !important;
+    color: #FF4481;
+    background-color: #171F38 !important;
+    overflow-y: auto;
+    border: 1px solid #171F38 !important;
+    border-radius: 1rem;
   }
 
 

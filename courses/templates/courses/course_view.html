@@ -4,9 +4,74 @@
 {% block content %}
 
 <div class="row justify-content-center">
-
+    <div id="default-tabs">
+        <ul class="nav nav-tabs">
+            {% for lesson in all_lessons %}
+            <li id="{{lesson.lesson}}" class="nav-link tabss"><a role="tab" data-toggle="tab" href="#lesson{{lesson.lesson}}">Lesson: {{lesson.lesson}} </a> </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
+<div class="row ">
+    <div class="col-sm-4">
+        <div class="course-sect">
+            <h2 class="text-center mod-title">Course Resources</h2>
+            <legend style="font-size: 15px !important;" class="text-muted text-center">(Available Downloadble Resources)</legend><hr style=" background-color: white !important;">
+            {% for lesson in all_lessons %}
+                {% if lesson.file_upload %}
+                <a href="{{lesson.file_upload.url}}" download><p class="text-center mod-title">{{lesson.file_upload}} - Download</p></a>
+                {% endif %}
+            {% endfor %}
 
+        </div>
+    </div>
+    
+    
+    <div class="col-sm-8 mt-4">
+        <div class="tab-content">
+            {% for lesson in all_lessons %}
+            <div class="tab-pane text-center" id ="lesson{{lesson.lesson}}">
+                <div class = "text-center mr-0 course-sect-main text-white ">
+                    <h3 class="text-center mod-title">Lesson: {{lesson.lesson}}</h3>
+                    <p class="wordwrap text-center">{{lesson.all_the_content}}</p>
+                    <p class="wordwrap text-center">{{lesson.additional_content_1}}</p>
+                    <p class="wordwrap text-center">{{lesson.additional_content_2}}</p>
+                    {% if lesson.file_upload %}
+                    
+
+                    {% endif %}
+                </div>
+            </div>
+        
+            {% endfor %}
+    
+        </div>
+
+
+    </div>
+</div>
 
 {% endblock content %}
+{% block javascript %}
+<script>
+$(document).ready(function(){
+
+    $('#lesson1').addClass("active");
+    
+    $('.tabss').on('click', function(){
+        //alert($(this).attr("id"));
+        
+    });
+    
+    $('')
+
+
+
+});
+
+</script>
+
+
+
+{% endblock javascript %}

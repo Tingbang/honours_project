@@ -1,18 +1,25 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
-
 {% load crispy_forms_tags %}
+
+<div class="row justify-content-center">
+    <div class="col-8">
+        <h1 class="text-center mod-title">Create Lesson</h1>
+        <legend class="text-muted text-center">Course: {{Course}} by {{user}}</legend>
+        <legend class="text-muted text-center">Current Lesson: {{lesson_count}}</legend>
+        <legend class="text-muted text-center">Need more space? <input style="background-color: #FF4481 !important; color: white; " class="btn " type="button" id="add" name="" value="Add"></legend>
+    </div>
+</div>  
 <div class="row justify-content-center">
     <div class="col-sm-8">
         <form id="frm" method="POST"action="">
+            
             {% csrf_token %}
             {{form|crispy}}
             <input class="btn btn-dark" type="submit" name="submit" value="submit">
-            <input class="btn btn-primary" type="button" id="add" name="" value="add new">
         </form>
     </div>
 </div>
-
 
 {% endblock content %}
 
@@ -21,21 +28,39 @@
 $(document).ready(function(){
     var newInputItem;
     var counter = 0;
+    $('#div_id_additional_content_1').hide();
+    $('#div_id_additional_content_2').hide();
   
     $('#add').on('click', function(){
+        counter += 1;
                   
         if(counter == 2){
-            $('#add').prop("disabled", true);
+            $('#div_id_additional_content_2').show();
             //alert("YEHAW");
         }else{
-            counter= counter + 1;
-            console.log(counter);
-            newInputItem = $('<label for ="additional_'+counter+'">Additional Content</label><textarea id="additional_' + counter +'"class="textarea form-control" cols=40 rows=10></textarea>');
-            $('#div_id_all_the_content').append(newInputItem);
-
+            $('#div_id_additional_content_1').show();
+            
         }
         
     });
+
+    $('textarea').on("input", function(){
+        var maxlength = 1500;
+        var currentLength = $(this).val().length;
+        console.log(currentLength);
+
+        if(currentLength >=maxlength){
+            $("label[for='id_all_the_content']").text("Max Characters Exeeded.");
+            
+        }else{ $("label[for='id_all_the_content']").text(currentLength + "/" + maxlength + " characters left"); }
+
+    });
+    
+
+
+
+
+
 });
 
 </script>

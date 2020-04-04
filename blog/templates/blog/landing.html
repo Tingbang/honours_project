@@ -1,13 +1,47 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h2 class="text-center text-muted">
-                    Welcome to the landing page
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1 p-0"></div>
+            <div class="col-6 mt-5 p-0">
+                <h1 id="landing-title" class=" mod-title">
+                    Revision made Easy!
+                </h1>
+                <h2 id="" class="mod-title">
+                    A tool for students made by students!
                 </h2>
             </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-1 text-center pr-0">
+                <i class="fas fa-greater-than-equal fa-8x"></i>
+            </div>
+            <div class="col-5 pl-0 pr-0">
+                <p id="landing-info" class="word-wrap">Lorem ipsum dolor sit amet, 
+                    consectetur adipiscing elit,
+                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                      Ut enim ad minim veniam,
+                       quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                         in voluptate velit esse cillum dolore eu fugiatss nulla pariatur.
+                          Excepteur sint occaecat cupidatat non proident,
+                           sunt in culpa qui officia deserunt mollit anim id est laborum daskw keerm</p>
+
+
+            </div>
+            <div class="col-6">
+                <div class="course-sect-main">
+                    <h2 class="text-center text-white pl-2">Start Revising <span class="mod-title">Now!</span></h2>
+                    <h2 class="text-white pl-2"> How to get started:</h2>
+                    <h3 class="text-white pl-2"><i class="fas fa-greater-than-equal fa-1x"></i> Step 1: Register an <span class="mod-title"><a class="mod-title" href="{% url 'register' %}">Account</a></span></h3>
+                    <h3 class="text-white pl-2"><i class="fas fa-greater-than-equal fa-1x"></i> Step 2: Login to your <span class="mod-title"><a class="mod-title" href="{% url 'login' %}">Account</a></span></h3>
+                    <h3 class="text-white pl-2"><i class="fas fa-greater-than-equal fa-1x"></i> Step 3: Start Revising</h3>
+                </div>
+            </div>
+
         </div>
     </div>
 
