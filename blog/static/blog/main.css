@@ -121,6 +121,24 @@ body {
   .article-content {
     white-space: pre-line;
   }
+  .default-tabs a{
+    color: #FF4481 !important;
+    padding: 3px !important;
+
+  }
+
+  .default-tabs a:hover{
+    color: #FF4481 !important;
+    background-color: white;
+  }
+  .default-tabs .nav-link{
+    
+    background-color: white;
+  }
+
+  .check{
+    height: 100vh !important;
+  }
   
   .article-img {
     height: 65px;
@@ -259,14 +277,17 @@ body {
     overflow-y: hidden;
   }
   .course-sect-main{
-    height: 50vh !important;
-    color: #FF4481;
+    height: 70vh !important;
+    color: #cbd5db !important;
     background-color: #171F38 !important;
     overflow-y: auto;
     border: 1px solid #171F38 !important;
     border-radius: 1rem;
   }
 
+  .default-tabs li a:active{
+    color: black !important;
+  }
 
   @media only screen and (max-width: 600px){
     .side-nav{
@@ -315,4 +336,3 @@ body {
 .side-nav ul li .dropdown-menu{
   background-color: #2A3452 !important;
 }
-

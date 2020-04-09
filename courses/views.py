@@ -30,9 +30,15 @@ def my_course(request):
 @login_required
 def view_specific_course(request, course_pk):
     get_all_lessons = Lesson.objects.filter(course=course_pk)
+    course_name = Course.objects.filter(pk=course_pk)
+
+
+
 
     args ={
-        "all_lessons": get_all_lessons
+        "all_lessons": get_all_lessons,
+        "name": course_name
+        
     }
 
 

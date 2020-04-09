@@ -194,9 +194,6 @@ $(document).ready(function(){
                         error: function(errorData){console.log("error:" ,errorData); }
                     });
         
-
-
-
                 for(let j = 0; j < wrong_questions.length; j++){ $('.wrong-quest').append("<li>'" +wrong_questions[j] + "' - Correct Answer: " + correct_answers[j] + "</li>"); }
                     
                 }else{ $("input[type='radio']").prop('checked', false); set_questions(x); }

@@ -147,18 +147,17 @@ def store_results(request):
 
             
 @login_required
-def get_search_queryset(request,query=None):
+def get_search_queryset(request):
 
     if request.method == "GET":
-        search_text = request.GET.get('search')
-        search_text.split(" ")
-        
-        queryset_search = Quiz.objects.filter(Q(title__contains = search_text) | Q(subject__contains =search_text) | Q(level__icontains =search_text)| Q(topic__icontains =search_text))
+
+        query = serializers.serialize("json", Quiz.objects.all())
+        #queryset_search = Quiz.objects.filter(Q(title__contains = search_text) | Q(subject__contains =search_text) | Q(level__icontains =search_text)| Q(topic__icontains =search_text))
 
     else:
         search_text = ''
 
-    return HttpResponse(queryset_search) 
+    return JsonResponse(query,safe=False) 
             
             
     

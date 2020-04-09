@@ -3,9 +3,16 @@
 
 {% block content %}
 
+
 <div class="row justify-content-center">
-    <div id="default-tabs">
-        <ul class="nav nav-tabs">
+    {% for nm in name %}
+    <h2>{{nm.name}}</h2>
+    {% endfor %}
+</div>
+<div class="row justify-content-center">
+    <div class="default-tabs">
+
+        <ul class="nav nav-tabs default-tabs ">
             {% for lesson in all_lessons %}
             <li id="{{lesson.lesson}}" class="nav-link tabss"><a role="tab" data-toggle="tab" href="#lesson{{lesson.lesson}}">Lesson: {{lesson.lesson}} </a> </li>
             {% endfor %}
@@ -15,7 +22,7 @@
 
 <div class="row ">
     <div class="col-sm-4">
-        <div class="course-sect">
+        <div class="course-sect mt-4">
             <h2 class="text-center mod-title">Course Resources</h2>
             <legend style="font-size: 15px !important;" class="text-muted text-center">(Available Downloadble Resources)</legend><hr style=" background-color: white !important;">
             {% for lesson in all_lessons %}
@@ -28,7 +35,7 @@
     </div>
     
     
-    <div class="col-sm-8 mt-4">
+    <div class="col-sm-8 mt-4 check">
         <div class="tab-content">
             {% for lesson in all_lessons %}
             <div class="tab-pane text-center" id ="lesson{{lesson.lesson}}">
@@ -61,6 +68,8 @@ $(document).ready(function(){
     
     $('.tabss').on('click', function(){
         //alert($(this).attr("id"));
+        ($(this).css("background-color", "gray"));
+        
         
     });
     
