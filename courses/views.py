@@ -31,16 +31,11 @@ def my_course(request):
 def view_specific_course(request, course_pk):
     get_all_lessons = Lesson.objects.filter(course=course_pk)
     course_name = Course.objects.filter(pk=course_pk)
-
-
-
-
     args ={
         "all_lessons": get_all_lessons,
         "name": course_name
         
     }
-
 
     return render(request, 'courses/course_view.html', args)
 
@@ -50,7 +45,6 @@ def create_course(request):
     user = request.user
     create_form = CreateCourseForm(request.POST)
     if request.method == "POST":
-        print("hello")
         if create_form.is_valid():
             name = create_form.cleaned_data.get('name')
             description = create_form.cleaned_data.get('description')
@@ -99,7 +93,6 @@ def create_lesson(request, course_pk):
 
     if request.method == "POST":
         if form.is_valid():
-
             course = session
             all_the_content= form.cleaned_data.get('all_the_content')
             additional_1 = form.cleaned_data.get('additional_content_1')
@@ -113,7 +106,7 @@ def create_lesson(request, course_pk):
             instance.lesson = count
             instance.save()
             #del request.session['course_session']
-            return HttpResponseRedirect('/modify-course')
+            return HttpResponseRedirect(request.path_info)
 
 
     return render(request, 'courses/lesson_create.html', args)
@@ -130,7 +123,6 @@ def publish_check(request, course_pk, pub):
 @login_required
 def delete_course(request, course_pk):
     course = Course.objects.filter(id=course_pk).delete()
-
     return HttpResponseRedirect('/my-courses')
         
 
