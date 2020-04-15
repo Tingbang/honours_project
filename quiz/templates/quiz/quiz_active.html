@@ -115,7 +115,6 @@ $.fn.randomize = function(childElem) {
 
       for(var i=0; i < elems.length; i++)
         $this.append(elems[i]);      
-
   });    
 }
 })(jQuery)
@@ -187,22 +186,20 @@ $(document).ready(function(){
                         sum: sum,
                         csrfmiddlewaretoken: "{{ csrf_token }}"
                         },
-                    success: function(data){
-  
-                        
-                    },
-                        error: function(errorData){console.log("error:" ,errorData); }
+                    success: function(data){},error: function(errorData){console.log("error:" ,errorData); }
                     });
         
-                for(let j = 0; j < wrong_questions.length; j++){ $('.wrong-quest').append("<li>'" +wrong_questions[j] + "' - Correct Answer: " + correct_answers[j] + "</li>"); }
+                for(let j = 0; j < wrong_questions.length; j++)
+                {
+                    $('.wrong-quest').append("<li>'" +wrong_questions[j] + "' - Correct Answer: " +
+                    correct_answers[j] + "</li>"); 
+                }
                     
                 }else{ $("input[type='radio']").prop('checked', false); set_questions(x); }
                        
             });
 
         });
-
-
 function set_questions(x){
     $("div.active-quiz").randomize("div.choice"); $('.ans0').html(incorrect[x].incorrect_1);
     $('.ans1').html(incorrect[x].incorrect_2); $('.ans2').html(incorrect[x].incorrect_3);
@@ -220,7 +217,7 @@ $('input[type="radio"]').click(function(){
         correct = incorrect[x].correct;
         weightings = parseInt(incorrect[x].weighting);
     }
-    else if($(this).is(":not(:checked)")){console.log("brebbb");}});
+    else if($(this).is(":not(:checked)")){}});
 
 
     </script>

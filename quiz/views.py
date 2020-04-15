@@ -22,7 +22,6 @@ def create_quiz(request):
             instance = form.save(commit=False)
             instance.title = title
             instance.topic = topic
-
             instance.author = request.user
             instance.save()
             return HttpResponseRedirect('/my_quiz')
@@ -30,35 +29,7 @@ def create_quiz(request):
             form = CreateQuizForm()
     return render(request, 'quiz/create_form.html', {'form':form})
 
-@login_required
-def create_questions(request):
-    user = request.user
-    form = CreateQuestionForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
-            newquiz = quiz
-            question = form.cleaned_data.get('correct_answer')
-            correct_answer = form.cleaned_data.get('correct_answer')
-            incorrect_answer_1 = form.cleaned_data.get('incorrect_answer_1')
-            incorrect_answer_2  = form.cleaned_data.get('incorrect_answer_2')
-            incorrect_answer_3  = form.cleaned_data.get('incorrect_answer_3')
-            incorrect_answer_4  = form.cleaned_data.get('incorrect_answer_4')
-            instance = form.save(commit=False)
-            instance.quiz = newquiz
-            instance.question = question
-            instance.correct_answer = correct_answer
-            instance.incorrect_answer_1 = incorrect_answer_1
-            instance.incorrect_answer_2 = incorrect_answer_2
-            instance.incorrect_answer_3 = incorrect_answer_3
-            instance.incorrect_answer_4 = incorrect_answer_4
-            instance.save()
-            
-            return HttpResponseRedirect('/my_quiz')
 
-    else:
-        #Re-Render
-        form = CreateQuestionForm()
-    return render(request, 'quiz/create_questions.html', {'form': form})
 
 #Make sure to pass the user to ensure that only the author of the quiz can view******
 #When a user clicks "edit", take them to a page that retrieves that specific quizzes details

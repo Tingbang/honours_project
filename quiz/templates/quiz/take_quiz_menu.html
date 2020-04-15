@@ -4,13 +4,13 @@
 
 <div class="row justify-content-center">
     <div class="col-8">
-        <h1 class="text-center mod-title"> Quizzes</h1>
-        <legend class="text-center text-muted"> A description on how to search for quizzes</legend>
+        <h1 class="text-center mod-title"> View All Quizzes</h1>
+        <legend class="text-center text-muted"> Search by Title, Subject or by Level</legend>
         <div class="input-group select-group">
             {% csrf_token %}
             <input type="text" name="q" id="id_q" class="form-control form-control-sm text-center" placeholder="Search..."/>
             </div>
-            <div class="text-center" id="results"></div>
+            <div class="search-results text-center" id="results"></div>
     </div>
 </div>
 
@@ -57,17 +57,12 @@
 <script>
 
 $(document).ready(function(){
-
-  
-
   var subject_names = [];
   $.ajax({
           url: "{% url 'get-search'%}",
           type: "GET",
           dataType:'json',
-
           success: function(data){
-
             $('#id_q').keyup(function(){
               var searchField = ($('#id_q').val()).toLowerCase();
               var expression = new RegExp(searchField, "i");
@@ -79,18 +74,18 @@ $(document).ready(function(){
                 var subject = value.fields.subject.toLowerCase();
                 var level = value.fields.level.toLowerCase();
                 var pk = value.pk;
-                var v = "{% url 'active-quiz' quiz_pk=12345 %}".replace(/12345/,pk);
+                var url = "{% url 'active-quiz' quiz_pk=12345 %}".replace(/12345/,pk);
                 //console.log(value.pk);
-                if(newtitle.search(expression) != -1 || subject.search(expression) != -1 || level.search(expression) != -1){
-                 output+= "<a href='"+v+"' class='text-center'>" + title + "| " +subject + "|" +  level +"</a><br>";
+                if(newtitle.search(expression) != -1 || subject.search(expression) != -1 || level.search(expression) != -1)
+                {
+                 output+= "<a class='mod-title' href='" + url + "' class='text-center'>" + title +
+                          "</a><p>" + level +" " + subject + "</p><br>";
                 }
-
                 if(searchField.length == 0){
                   $('#results').empty();
                   output = "";
                 }
-                
-                
+                   
               });
               $('#results').html(output);
           });

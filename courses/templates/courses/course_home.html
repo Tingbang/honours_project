@@ -12,22 +12,19 @@
 
 
 <div class="row justify-content-center">
-  <div class="col-sm-3 course-sect m-2">
-    <legend class="text-center">My Enrolled Courses</legend>
 
-  </div>
-  <div class="col-sm-3 course-sect m-2">
+  <div class="col-sm-4 course-sect m-2">
     <legend class="text-center">Available Subjects</legend>
 
     {% for subjects in subjects %}
-    <div id="subject-hover" class="subject-item text-center"><a href="{% url 'view-courses' subject=subjects.0 %}">{{subjects.0}}</a></div>
+    <div id="subject-hover" class="subject-item text-center p-3"><a href="{% url 'view-courses' subject=subjects.0 %}">{{subjects.0}}</a></div>
     {% endfor %}
 
   </div>
-  <div class="col-sm-3 course-sect m-2">
+  <div class="col-sm-4 course-sect m-2">
     <legend class="text-center">My Courses</legend>
     {% for courses in my_published %}
-    <div id="subject-hover" class="subject-item text-center"><a href="{% url 'view-this-course' course_pk=courses.id %}">{{courses}}</a></div>
+    <div id="subject-hover" class="subject-item text-center p-3"><a class="p-4"href="{% url 'view-this-course' course_pk=courses.id %}">{{courses}}</a></div>
     {% endfor %}
   </div>
 </div>

@@ -15,17 +15,9 @@ def stats_home(request):
     choice_data = []
     serial = serializers.serialize("json", Result.objects.filter(user=user))
     quiz = Result.objects.filter(user=user)
-
     quiz_filter = Result.objects.values('score').filter(quiz__title__contains="Test Quiz")
-    print(quiz_filter)
-
     available_quiz = Result.objects.values('quiz__title').filter(user=user).distinct()
-    #print(available_quiz)
-
-
-    #Works, got my desired results
     test1 = Result.objects.values('quiz__title').order_by('quiz').filter(user=user).annotate(scores=Avg('score')).distinct()
-
     avg = Result.objects.all().aggregate(Avg('score'))
     
     stat_data = Result.objects.filter(user=user)

@@ -51,22 +51,6 @@
 </div>
 
 
-<!--My Quiz Statistics-->
-<div class="row justify-content-center mt-4 pt-3">
-    <div class="col-sm-4 stats">
-        <p class="text-center" >One</p>
-
-    </div>
-    <div class="col-sm-4 stats">
-        <p class="text-center">Two</p>
-
-    </div>
-    <div class="col-sm-4 stats">
-        <p class="text-center" >Three</p>
-
-    </div>
-</div>
-
 
 {% endblock content%}
 
@@ -74,10 +58,7 @@
 {% block javascript %}
 <script>
     $(document).ready(function(){
-        //console.log("{{choice_label|safe}}");
-        //console.log("{{choice_colours|safe}}");
         var quiz_check1 = "test quiz";
-
         updateChart2();
         var select_default ='pie';
 
@@ -89,7 +70,6 @@
         var colours2 = [];
         var letters = '0123456789ABCDEF';
         var attempts = [];
-        
         var arry1 = [];
         var timestamp = [];
             
@@ -133,6 +113,7 @@
                 },
             options:{}
         });
+
         var myChart2 = new Chart(ctx2, {
             type: 'line',
             data:

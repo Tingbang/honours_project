@@ -3,9 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
 
-# Quiz -> (contains) Questions -> (Has Answers)
-# Title, Subject, Level, Topic, Created By, Date Created
-# 29/01/2020 - 
 class Quiz(models.Model):
     title = models.CharField(max_length = 200)
     subject = models.CharField(max_length = 20)
@@ -19,12 +16,10 @@ class Quiz(models.Model):
     
     def get_absolute_url(self):
         return self.quiz.get_absolute_url()
-
     class Meta:
         verbose_name_plural = "quiz"
 
 class Questions(models.Model):
-
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     question = models.CharField(max_length = 350)
     correct_answer = models.CharField(max_length = 400)

@@ -98,8 +98,8 @@ body {
     height: 73vh;
     width: 100%;
     overflow-y: scroll;
-    
   }
+
   #course-card{
     color:white !important;
     background-color: #171F38;
@@ -129,11 +129,11 @@ body {
 
   .default-tabs a:hover{
     color: #FF4481 !important;
-    background-color: white;
+    background-color: #171F38 !important;
   }
   .default-tabs .nav-link{
     
-    background-color: white;
+    background-color: #171F38 !important;
   }
 
   .check{
@@ -271,7 +271,7 @@ body {
   }
 
   .course-sect{
-    height: 50vh !important;
+    height: 60vh !important;
     color: #FF4481;
     background-color: #171F38 !important;
     overflow-y: hidden;
