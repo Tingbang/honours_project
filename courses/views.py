@@ -24,7 +24,6 @@ def my_course(request):
     args ={
         "my_courses": all_my_course
     }
-
     return render(request, 'courses/my_courses.html', args)
 
 @login_required
@@ -33,15 +32,13 @@ def view_specific_course(request, course_pk):
     course_name = Course.objects.filter(pk=course_pk)
     args ={
         "all_lessons": get_all_lessons,
-        "name": course_name
-        
+        "name": course_name 
     }
 
     return render(request, 'courses/course_view.html', args)
 
 @login_required
 def create_course(request):
-
     user = request.user
     create_form = CreateCourseForm(request.POST)
     if request.method == "POST":
@@ -56,11 +53,6 @@ def create_course(request):
             instance.user = user
             instance.slug = (subject + "-Course")
             instance.save()
-            # pk_session = Course.objects.filter(name=name).values_list('id', flat=True)
-            # print(pk_session)
-            # pk_set = str(pk_session)
-
-            # request.session['course_session'] = pk_set
             return HttpResponseRedirect('/my-courses')
    
     args  ={
@@ -71,13 +63,12 @@ def create_course(request):
 
 @login_required
 def view_courses(request, subject):
-
     courses = Course.objects.filter(subject=subject)
- 
+
     args  ={"all_courses": courses,
             "subject": subject}
-
     return render(request, 'courses/all_courses.html', args)
+    
 
 @login_required
 def create_lesson(request, course_pk):

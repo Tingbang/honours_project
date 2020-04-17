@@ -23,7 +23,7 @@
               {% if course.published is True %}
                 <p>Status: Published</p>
                 <a href="{% url 'publish' course_pk=course.pk pub=False  %}" class="card-link mod-title">Make Private</a>
-              {%else%}
+              {% else %}
               <p>Status: Private</p>
               <a href="{% url 'publish' course_pk=course.pk pub=True  %}" class="card-link mod-title">Make Public</a>
               {% endif %}

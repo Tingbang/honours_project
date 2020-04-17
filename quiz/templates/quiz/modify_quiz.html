@@ -28,7 +28,6 @@
             <input id="submit" class="btn btn-dark" value="submit" name="submit" type="submit"></input>
         </form>
     </div>
-
     <div class="content-section-questions col-lg-4 col-md-8 col-sm-8 col-xs-8 mt-0 text-center">
             <h2 class="text-center">Question List: </h2>
             {% if question%}
@@ -41,7 +40,6 @@
             <div class="qs"><h2 class="mod-title fill"></h2></div>
             <p>{{response_data}}</p>
         </div>
-        
     {% endif%}
 </div> <!--Row-->
 
@@ -49,14 +47,11 @@
 {% block javascript %}
 <script type="text/javascript">
     $(document).ready(function(){
-      var form = $(".add_question");
-
-      form.submit(function(event){
-
+        var form = $(".add_question");
+        form.submit(function(event){
         event.preventDefault();
         var thisForm = $(this);
         var url = thisForm.attr("action");
-       // console.log(url);
         var method = thisForm.attr("method");
         var formData = thisForm.serialize();
         
@@ -69,7 +64,6 @@
             $('.add_question')[0].reset();
             $('.qs').append("<h2 class= 'mod-title'>Q: " + data.question + "</h2>");
             console.log(url);
-            
             
 
           },//End of Success

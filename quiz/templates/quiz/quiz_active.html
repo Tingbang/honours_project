@@ -156,7 +156,7 @@ $(document).ready(function(){
          });
 
         $(document).on("click","#next", function(){
-
+            
             if(vals == correct){
                 right.push(weightings);
                 x++;
@@ -201,13 +201,13 @@ $(document).ready(function(){
 
         });
 function set_questions(x){
-    $("div.active-quiz").randomize("div.choice"); $('.ans0').html(incorrect[x].incorrect_1);
-    $('.ans1').html(incorrect[x].incorrect_2); $('.ans2').html(incorrect[x].incorrect_3);
-    $('.ans3').html(incorrect[x].incorrect_4); $('.ans4').html(incorrect[x].correct);
-    $('#choice0').val(incorrect[x].incorrect_1); $('#choice1').val(incorrect[x].incorrect_2);
-    $('#choice2').val(incorrect[x].incorrect_3); $('#choice3').val(incorrect[x].incorrect_4);
-    $('#choice4').val(incorrect[x].correct); $('.quest').empty();
-    $('.quest').html(results[x]); $('.lbl').html(answers[x]);
+    $("div.active-quiz").randomize("div.choice");    $('.ans0').html(incorrect[x].incorrect_1);
+    $('.ans1').html(incorrect[x].incorrect_2);       $('.ans2').html(incorrect[x].incorrect_3);
+    $('.ans3').html(incorrect[x].incorrect_4);       $('.ans4').html(incorrect[x].correct);
+    $('#choice0').val(incorrect[x].incorrect_1);     $('#choice1').val(incorrect[x].incorrect_2);
+    $('#choice2').val(incorrect[x].incorrect_3);     $('#choice3').val(incorrect[x].incorrect_4);
+    $('#choice4').val(incorrect[x].correct);         $('.quest').empty();
+    $('.quest').html(results[x]);                    $('.lbl').html(answers[x]);
 
 }
 

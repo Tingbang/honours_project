@@ -9,11 +9,19 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            email = form.cleaned_data.get('email')
+            instance = form.save(commit=False)
+            instance.username = username
+            instance.password = password
+            instance.email = email
+            instance.save()
             messages.success(request, f'Account created!')
             return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+    
 
 #Ensures a user needs to be logged in to access this content
 @login_required

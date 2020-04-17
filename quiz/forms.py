@@ -33,14 +33,12 @@ class CreateQuizForm(forms.ModelForm):
         new_title = ''.join(i for i in strip_title if not i in banned_characters)
         return new_title
     
-
     class Meta:
         model = Quiz
         fields = ['title','subject','level','topic']
 
 
 class CreateQuestionForm(forms.ModelForm):
-    
     question = forms.CharField(label = "Question:", max_length = 400)
     correct_answer = forms.CharField(label = "Correct Answer", max_length = 400)
     incorrect_answer_1 = forms.CharField(label = "Incorrect Answer 1: ", max_length = 400)

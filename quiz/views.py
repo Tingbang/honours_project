@@ -30,11 +30,6 @@ def create_quiz(request):
     return render(request, 'quiz/create_form.html', {'form':form})
 
 
-
-#Make sure to pass the user to ensure that only the author of the quiz can view******
-#When a user clicks "edit", take them to a page that retrieves that specific quizzes details
-#To be able to add questions and answers
-#** QUESTION MARK WEIGHTING
 @login_required
 def view_my_quiz(request, pk=None, auth=None, quz=None):
     form = CreateQuestionForm(request.POST)
@@ -52,9 +47,7 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
             incorrect_answer_4  = form.cleaned_data.get('incorrect_answer_4')
             response_data ={}
             response_data['question'] = question
-
             instance = form.save(commit=False)
-
             instance.quiz = quiz
             instance.question = question
             instance.correct_answer = correct_answer
@@ -63,7 +56,6 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
             instance.incorrect_answer_3 = incorrect_answer_3
             instance.incorrect_answer_4 = incorrect_answer_4
             instance.save()
-           
             return HttpResponse(json.dumps(response_data), content_type="application/json")            
 
     if pk and (user_check == auth):
@@ -72,7 +64,6 @@ def view_my_quiz(request, pk=None, auth=None, quz=None):
         args = {'quiz': my_quiz, 'question': questions, 'title': quz, 'form': form}
     else:
         return HttpResponseRedirect('/my_quiz')
-    
     return render(request, 'quiz/modify_quiz.html', args)
 
 @login_required
@@ -88,17 +79,13 @@ def get_questions(request):
         if request.method =="GET":
             serial = serializers.serialize("json", Questions.objects.filter(quiz=quiz_session))
             response_data = serial
-            #del request.session['quiz_session']
             return HttpResponse(response_data, content_type="application/json")
-
 
 @login_required
 def active_quiz(request, quiz_pk):
     quiz = Quiz.objects.filter(pk=quiz_pk)
-    questions = Questions.objects.filter(quiz=quiz_pk)
     request.session['quiz_session'] = quiz_pk
-
-    args={'question': questions, 'quiz': quiz}
+    args={'quiz': quiz}
     return render(request, 'quiz/quiz_active.html', args)
 
 @login_required

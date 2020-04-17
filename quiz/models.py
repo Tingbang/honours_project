@@ -10,7 +10,6 @@ class Quiz(models.Model):
     topic = models.CharField(max_length = 25)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
-
     def __str__(self):
         return self.title
     
@@ -62,9 +61,3 @@ class Result(models.Model):
     
     class meta:
         verbose_name_plural="result"
-
-
-#Results Table
-#Quiz name, user refrence, score for that particular quiz
-#Could get all results taken for that quiz and find the average of all scores
-#
