@@ -28,7 +28,7 @@ class CreateQuizForm(forms.ModelForm):
     #Cleans the user input and strips tags
     def clean_title(self):
         title = self.cleaned_data.get("title")
-        banned_characters = [';',':','!','*','()','(',')','}','"',"'"]
+        banned_characters = [';',':','!','*','()','(',')','}','"',"'","<",">"]
         strip_title = strip_tags(title)
         new_title = ''.join(i for i in strip_title if not i in banned_characters)
         return new_title
