@@ -1,5 +1,5 @@
 # honours_project
-Darren Lally's Honours Project, Student Number: S1622370
+Darren Lally's Honours Project, Student Number: S1622370 - 
 This project was developed using Django Web Framework.
 
 Project Title: Investigation into what contributing factors aided the rapid growth of using Python with Django-Framework over using PHP for developing web-applications.
